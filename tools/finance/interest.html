@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利息计算器 - 生活计算宝典</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../layout.css">
+    <link rel="stylesheet" href="../../components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body class="app">
+    <header class="app-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-mobile">
+                    <a href="../../pages/finance.html" class="navbar-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="navbar-title">利息计算器</div>
+                    <div></div>
+                </div>
+                
+                <div class="navbar-desktop">
+                    <a href="../../index.html" class="logo">
+                        <i class="fas fa-calculator"></i>
+                        <span class="logo-text">生活计算宝典</span>
+                    </a>
+                    <div class="nav-links">
+                        <a href="../../index.html" class="nav-link">首页</a>
+                        <a href="../../pages/finance.html" class="nav-link active">理财金融</a>
+                        <a href="../../pages/shopping.html" class="nav-link">消费购物</a>
+                        <a href="../../pages/tools.html" class="nav-link">所有工具</a>
+                    </div>
+                    <div class="theme-toggle">
+                        <button class="theme-btn" aria-label="切换主题">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <section class="section">
+            <div class="container">
+                <!-- 面包屑导航 -->
+                <nav class="breadcrumb">
+                    <a href="../../index.html" class="breadcrumb-link">首页</a>
+                    <span class="breadcrumb-divider"><i class="fas fa-chevron-right"></i></span>
+                    <a href="../../pages/finance.html" class="breadcrumb-link">理财金融</a>
+                    <span class="breadcrumb-divider"><i class="fas fa-chevron-right"></i></span>
+                    <span class="breadcrumb-current">利息计算器</span>
+                </nav>
+                
+                <!-- 计算器容器 -->
+                <div class="calculator-container">
+                    <div class="calculator-card">
+                        <div class="calculator-header">
+                            <h1 class="calculator-title">利息计算器</h1>
+                            <p class="calculator-description">
+                                计算存款、贷款利息，支持简单利息和复利计算，多种计息方式可选。
+                            </p>
+                        </div>
+                        
+                        <!-- 计算类型选择 -->
+                        <div class="tabs" id="interestTabs">
+                            <button class="tab active" data-type="deposit">存款利息</button>
+                            <button class="tab" data-type="loan">贷款利息</button>
+                        </div>
+                        
+                        <!-- 存款利息计算 -->
+                        <div id="depositSection">
+                            <div class="input-group">
+                                <label class="input-label">本金金额 (元)</label>
+                                <input type="number" id="depositPrincipal" class="input-field" placeholder="例如：10000" value="10000">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">年利率 (%)</label>
+                                <input type="number" id="depositRate" class="input-field" placeholder="例如：3.5" value="3.5" step="0.01">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">存款期限</label>
+                                <div class="input-row">
+                                    <input type="number" id="depositTime" class="input-field" placeholder="例如：12" value="12">
+                                    <select id="depositUnit" class="input-field">
+                                        <option value="months">月</option>
+                                        <option value="years">年</option>
+                                        <option value="days">天</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">计息方式</label>
+                                <select id="depositType" class="input-field">
+                                    <option value="simple">简单利息</option>
+                                    <option value="compound">复利</option>
+                                </select>
+                            </div>
+                            
+                            <!-- 复利选项 -->
+                            <div id="compoundOptions" class="input-group">
+                                <label class="input-label">复利频率</label>
+                                <select id="compoundFrequency" class="input-field">
+                                    <option value="yearly">每年复利</option>
+                                    <option value="quarterly">每季度复利</option>
+                                    <option value="monthly">每月复利</option>
+                                    <option value="daily">每日复利</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- 贷款利息计算 -->
+                        <div id="loanSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">贷款金额 (元)</label>
+                                <input type="number" id="loanPrincipal" class="input-field" placeholder="例如：200000" value="200000">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">年利率 (%)</label>
+                                <input type="number" id="loanRate" class="input-field" placeholder="例如：4.9" value="4.9" step="0.01">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">贷款期限</label>
+                                <div class="input-row">
+                                    <input type="number" id="loanTime" class="input-field" placeholder="例如：20" value="20">
+                                    <select id="loanUnit" class="input-field">
+                                        <option value="years">年</option>
+                                        <option value="months">月</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">还款方式</label>
+                                <select id="repaymentType" class="input-field">
+                                    <option value="equal_principal_interest">等额本息</option>
+                                    <option value="equal_principal">等额本金</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- 计算按钮 -->
+                        <button class="btn btn-primary btn-block calc-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> 计算利息
+                        </button>
+                        
+                        <!-- 结果展示 -->
+                        <div class="result-display" id="resultSection" style="display: none;">
+                            <h3 class="result-title"><i class="fas fa-chart-bar"></i> 计算结果</h3>
+                            
+                            <!-- 存款结果 -->
+                            <div id="depositResult" style="display: none;">
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">本金</span>
+                                        <span class="result-value" id="depositPrincipalResult">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">利息收入</span>
+                                        <span class="result-value" id="interestEarned">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">本息合计</span>
+                                        <span class="result-value" id="totalDeposit">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">年化收益率</span>
+                                        <span class="result-value" id="annualizedReturn">0.00%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 复利明细 -->
+                                <div id="compoundDetails" style="display: none; margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">复利增长明细</h4>
+                                    <div class="result-grid">
+                                        <div class="result-item">
+                                            <span class="result-label">复利次数</span>
+                                            <span class="result-value" id="compoundTimes">0 次</span>
+                                        </div>
+                                        <div class="result-item">
+                                            <span class="result-label">实际年利率</span>
+                                            <span class="result-value" id="effectiveRate">0.00%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 贷款结果 -->
+                            <div id="loanResult" style="display: none;">
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">贷款总额</span>
+                                        <span class="result-value" id="loanPrincipalResult">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">支付利息</span>
+                                        <span class="result-value" id="interestPaid">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">还款总额</span>
+                                        <span class="result-value" id="totalRepayment">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">月均还款</span>
+                                        <span class="result-value" id="monthlyPayment">0.00 元</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 等额本息明细 -->
+                                <div id="equalDetails" style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">还款明细</h4>
+                                    <div style="overflow-x: auto;">
+                                        <table class="repayment-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>期数</th>
+                                                    <th>月供</th>
+                                                    <th>本金</th>
+                                                    <th>利息</th>
+                                                    <th>剩余本金</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="repaymentSchedule">
+                                                <!-- 还款计划将通过JS动态生成 -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 使用说明 -->
+                    <div class="alert alert-info mt-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-lightbulb mr-3"></i>
+                            <div>
+                                <strong>使用说明：</strong> 
+                                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                    <li><strong>简单利息</strong>：利息只按本金计算，不包含已产生的利息</li>
+                                    <li><strong>复利</strong>：利息按本金和已产生的利息一起计算，收益更高</li>
+                                    <li><strong>等额本息</strong>：每月还款金额相同，前期利息多本金少</li>
+                                    <li><strong>等额本金</strong>：每月还款本金相同，利息逐月递减</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <a href="../../index.html" class="footer-logo">
+                        <i class="fas fa-calculator"></i>
+                        <span>生活计算宝典</span>
+                    </a>
+                    <p class="footer-description">
+                        一站式离线计算工具集合，为您的生活带来便利。
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">理财工具</h4>
+                    <a href="interest.html" class="footer-link">利息计算器</a>
+                    <a href="loan-compare.html" class="footer-link">贷款对比</a>
+                    <a href="investment.html" class="footer-link">投资收益计算</a>
+                    <a href="compound.html" class="footer-link">复利计算</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">快速链接</h4>
+                    <a href="../../pages/finance.html" class="footer-link">返回理财金融</a>
+                    <a href="../../pages/tools.html" class="footer-link">所有工具</a>
+                    <a href="https://github.com/laddzhao/life-calculators" target="_blank" class="footer-link">GitHub项目</a>
+                    <a href="../../404.html" class="footer-link">404页面</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">其他工具</h4>
+                    <a href="../home/utility-bill.html" class="footer-link">水电费计算</a>
+                    <a href="../shopping/discount.html" class="footer-link">折扣计算器</a>
+                    <a href="../health/bmi.html" class="footer-link">BMI计算</a>
+                    <a href="../professional/mortgage.html" class="footer-link">房贷计算器</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 生活计算宝典 · 利息计算器</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 移动端底部导航 -->
+    <nav class="mobile-bottom-nav">
+        <a href="../../index.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-label">首页</span>
+        </a>
+        <a href="../../pages/shopping.html" class="nav-item">
+            <i class="fas fa-shopping-cart nav-icon"></i>
+            <span class="nav-label">购物</span>
+        </a>
+        <a href="../../pages/finance.html" class="nav-item active">
+            <i class="fas fa-chart-line nav-icon"></i>
+            <span class="nav-label">理财</span>
+        </a>
+        <a href="../../pages/tools.html" class="nav-item">
+            <i class="fas fa-th nav-icon"></i>
+            <span class="nav-label">全部</span>
+        </a>
+        <a href="#" class="nav-item" id="mobileMenuBtn">
+            <i class="fas fa-ellipsis-h nav-icon"></i>
+            <span class="nav-label">更多</span>
+        </a>
+    </nav>
+
+    <script src="../../calculator.js"></script>
+    <script>
+        // 标签页切换
+        document.querySelectorAll('#interestTabs .tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有active类
+                document.querySelectorAll('#interestTabs .tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // 添加active类到当前标签
+                this.classList.add('active');
+                
+                const type = this.dataset.type;
+                
+                // 显示对应的内容区域
+                if (type === 'deposit') {
+                    document.getElementById('depositSection').style.display = 'block';
+                    document.getElementById('loanSection').style.display = 'none';
+                    document.getElementById('depositResult').style.display = 'block';
+                    document.getElementById('loanResult').style.display = 'none';
+                } else {
+                    document.getElementById('depositSection').style.display = 'none';
+                    document.getElementById('loanSection').style.display = 'block';
+                    document.getElementById('depositResult').style.display = 'none';
+                    document.getElementById('loanResult').style.display = 'block';
+                }
+                
+                // 显示结果区域
+                document.getElementById('resultSection').style.display = 'block';
+            });
+        });
+        
+        // 计息方式切换
+        document.getElementById('depositType').addEventListener('change', function() {
+            const type = this.value;
+            if (type === 'compound') {
+                document.getElementById('compoundOptions').style.display = 'block';
+            } else {
+                document.getElementById('compoundOptions').style.display = 'none';
+            }
+        });
+        
+        // 计算利息
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const activeTab = document.querySelector('#interestTabs .tab.active').dataset.type;
+            
+            if (activeTab === 'deposit') {
+                calculateDepositInterest();
+            } else {
+                calculateLoanInterest();
+            }
+            
+            // 显示结果区域
+            document.getElementById('resultSection').style.display = 'block';
+        });
+        
+        // 计算存款利息
+        function calculateDepositInterest() {
+            // 获取输入值
+            const principal = parseFloat(document.getElementById('depositPrincipal').value) || 0;
+            const annualRate = parseFloat(document.getElementById('depositRate').value) || 0;
+            const time = parseFloat(document.getElementById('depositTime').value) || 0;
+            const unit = document.getElementById('depositUnit').value;
+            const type = document.getElementById('depositType').value;
+            
+            // 转换时间为年
+            let years = 0;
+            if (unit === 'months') {
+                years = time / 12;
+            } else if (unit === 'years') {
+                years = time;
+            } else if (unit === 'days') {
+                years = time / 365;
+            }
+            
+            let interest = 0;
+            let total = 0;
+            let effectiveRate = annualRate;
+            
+            if (type === 'simple') {
+                // 简单利息计算
+                interest = principal * (annualRate / 100) * years;
+                total = principal + interest;
+                
+                // 隐藏复利明细
+                document.getElementById('compoundDetails').style.display = 'none';
+            } else {
+                // 复利计算
+                const frequency = document.getElementById('compoundFrequency').value;
+                let n = 1; // 复利频率
+                
+                switch(frequency) {
+                    case 'yearly': n = 1; break;
+                    case 'quarterly': n = 4; break;
+                    case 'monthly': n = 12; break;
+                    case 'daily': n = 365; break;
+                }
+                
+                // 复利公式: A = P(1 + r/n)^(nt)
+                const ratePerPeriod = annualRate / 100 / n;
+                const periods = years * n;
+                total = principal * Math.pow(1 + ratePerPeriod, periods);
+                interest = total - principal;
+                
+                // 计算实际年利率
+                effectiveRate = (Math.pow(1 + ratePerPeriod, n) - 1) * 100;
+                
+                // 显示复利明细
+                document.getElementById('compoundDetails').style.display = 'block';
+                document.getElementById('compoundTimes').textContent = Math.round(periods) + ' 次';
+                document.getElementById('effectiveRate').textContent = effectiveRate.toFixed(4) + '%';
+            }
+            
+            // 计算年化收益率
+            const annualizedReturn = (interest / principal / years) * 100;
+            
+            // 显示结果
+            document.getElementById('depositPrincipalResult').textContent = principal.toFixed(2) + ' 元';
+            document.getElementById('interestEarned').textContent = interest.toFixed(2) + ' 元';
+            document.getElementById('totalDeposit').textContent = total.toFixed(2) + ' 元';
+            document.getElementById('annualizedReturn').textContent = annualizedReturn.toFixed(2) + '%';
+            
+            // 显示存款结果区域
+            document.getElementById('depositResult').style.display = 'block';
+            document.getElementById('loanResult').style.display = 'none';
+        }
+        
+        // 计算贷款利息
+        function calculateLoanInterest() {
+            // 获取输入值
+            const principal = parseFloat(document.getElementById('loanPrincipal').value) || 0;
+            const annualRate = parseFloat(document.getElementById('loanRate').value) || 0;
+            const time = parseFloat(document.getElementById('loanTime').value) || 0;
+            const unit = document.getElementById('loanUnit').value;
+            const type = document.getElementById('repaymentType').value;
+            
+            // 转换时间为月
+            let months = 0;
+            if (unit === 'years') {
+                months = time * 12;
+            } else if (unit === 'months') {
+                months = time;
+            }
+            
+            const monthlyRate = annualRate / 100 / 12;
+            let totalInterest = 0;
+            let totalRepayment = 0;
+            let monthlyPayment = 0;
+            
+            if (type === 'equal_principal_interest') {
+                // 等额本息计算
+                // 月供公式: M = P * [r(1+r)^n] / [(1+r)^n - 1]
+                const temp = Math.pow(1 + monthlyRate, months);
+                monthlyPayment = principal * monthlyRate * temp / (temp - 1);
+                totalRepayment = monthlyPayment * months;
+                totalInterest = totalRepayment - principal;
+                
+                // 生成还款计划
+                generateRepaymentSchedule(principal, monthlyRate, months, monthlyPayment, 'equal_principal_interest');
+            } else {
+                // 等额本金计算
+                // 每月还款本金
+                const monthlyPrincipal = principal / months;
+                totalInterest = 0;
+                
+                // 生成还款计划
+                generateRepaymentSchedule(principal, monthlyRate, months, monthlyPrincipal, 'equal_principal');
+                
+                // 计算总利息和总还款额
+                let remainingPrincipal = principal;
+                for (let i = 0; i < months; i++) {
+                    const monthlyInterest = remainingPrincipal * monthlyRate;
+                    totalInterest += monthlyInterest;
+                    remainingPrincipal -= monthlyPrincipal;
+                }
+                
+                totalRepayment = principal + totalInterest;
+                // 等额本金的首月还款额
+                monthlyPayment = monthlyPrincipal + principal * monthlyRate;
+            }
+            
+            // 显示结果
+            document.getElementById('loanPrincipalResult').textContent = principal.toFixed(2) + ' 元';
+            document.getElementById('interestPaid').textContent = totalInterest.toFixed(2) + ' 元';
+            document.getElementById('totalRepayment').textContent = totalRepayment.toFixed(2) + ' 元';
+            document.getElementById('monthlyPayment').textContent = monthlyPayment.toFixed(2) + ' 元';
+            
+            // 显示贷款结果区域
+            document.getElementById('depositResult').style.display = 'none';
+            document.getElementById('loanResult').style.display = 'block';
+        }
+        
+        // 生成还款计划
+        function generateRepaymentSchedule(principal, monthlyRate, months, fixedAmount, type) {
+            const scheduleBody = document.getElementById('repaymentSchedule');
+            scheduleBody.innerHTML = '';
+            
+            let remainingPrincipal = principal;
+            
+            // 只显示前5期和最后5期
+            const displayCount = Math.min(10, months);
+            const firstHalf = Math.min(5, months);
+            const lastHalf = Math.max(0, Math.min(5, months - 5));
+            
+            for (let i = 1; i <= months; i++) {
+                // 只显示部分期数
+                if (i > firstHalf && i <= months - lastHalf) {
+                    if (i === firstHalf + 1) {
+                        // 添加省略号行
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td colspan="5" class="text-center" style="padding: 0.5rem; color: var(--text-tertiary); font-size: 0.875rem;">
+                                ... 省略 ${months - firstHalf - lastHalf} 期 ...
+                            </td>
+                        `;
+                        scheduleBody.appendChild(row);
+                    }
+                    continue;
+                }
+                
+                let monthlyInterest = remainingPrincipal * monthlyRate;
+                let monthlyPrincipal = 0;
+                let monthlyPayment = 0;
+                
+                if (type === 'equal_principal_interest') {
+                    // 等额本息
+                    monthlyPayment = fixedAmount;
+                    monthlyPrincipal = monthlyPayment - monthlyInterest;
+                } else {
+                    // 等额本金
+                    monthlyPrincipal = fixedAmount;
+                    monthlyPayment = monthlyPrincipal + monthlyInterest;
+                }
+                
+                remainingPrincipal -= monthlyPrincipal;
+                if (remainingPrincipal < 0) remainingPrincipal = 0;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>第 ${i} 期</td>
+                    <td>${monthlyPayment.toFixed(2)}</td>
+                    <td>${monthlyPrincipal.toFixed(2)}</td>
+                    <td>${monthlyInterest.toFixed(2)}</td>
+                    <td>${remainingPrincipal.toFixed(2)}</td>
+                `;
+                scheduleBody.appendChild(row);
+            }
+        }
+        
+        // 主题切换
+        function initTheme() {
+            const themeBtn = document.querySelector('.theme-btn');
+            
+            // 检查本地存储的主题设置
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            
+            // 切换主题函数
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新图标
+                if (themeBtn) {
+                    const icon = themeBtn.querySelector('i');
+                    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+            
+            // 添加事件监听
+            if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            
+            // 默认计算存款利息
+            calculateDepositInterest();
+        });
+    </script>
+    
+    <style>
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .tab:hover {
+            color: var(--primary);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .repayment-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        
+        .repayment-table th,
+        .repayment-table td {
+            padding: 0.5rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .repayment-table th {
+            font-weight: 600;
+            color: var(--text-primary);
+            background-color: var(--gray-50);
+        }
+        
+        .repayment-table th:first-child,
+        .repayment-table td:first-child {
+            text-align: left;
+        }
+        
+        .repayment-table tr:hover {
+            background-color: var(--gray-50);
+        }
+        
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        @media (max-width: 640px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .repayment-table {
+                font-size: 0.75rem;
+            }
+            
+            .repayment-table th,
+            .repayment-table td {
+                padding: 0.25rem;
+            }
+        }
+    </style>
+</body>
+</html>
