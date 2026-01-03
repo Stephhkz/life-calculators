@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投资收益计算器 - 生活计算宝典</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../layout.css">
+    <link rel="stylesheet" href="../../components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body class="app">
+    <header class="app-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-mobile">
+                    <a href="../../pages/finance.html" class="navbar-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="navbar-title">投资收益计算</div>
+                    <div></div>
+                </div>
+                
+                <div class="navbar-desktop">
+                    <a href="../../index.html" class="logo">
+                        <i class="fas fa-calculator"></i>
+                        <span class="logo-text">生活计算宝典</span>
+                    </a>
+                    <div class="nav-links">
+                        <a href="../../index.html" class="nav-link">首页</a>
+                        <a href="../../pages/finance.html" class="nav-link active">理财金融</a>
+                        <a href="../../pages/shopping.html" class="nav-link">消费购物</a>
+                        <a href="../../pages/tools.html" class="nav-link">所有工具</a>
+                    </div>
+                    <div class="theme-toggle">
+                        <button class="theme-btn" aria-label="切换主题">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <section class="section">
+            <div class="container">
+                <!-- 面包屑导航 -->
+                <nav class="breadcrumb">
+                    <a href="../../index.html" class="breadcrumb-link">首页</a>
+                    <span class="breadcrumb-divider"><i class="fas fa-chevron-right"></i></span>
+                    <a href="../../pages/finance.html" class="breadcrumb-link">理财金融</a>
+                    <span class="breadcrumb-divider"><i class="fas fa-chevron-right"></i></span>
+                    <span class="breadcrumb-current">投资收益计算</span>
+                </nav>
+                
+                <!-- 计算器容器 -->
+                <div class="calculator-container">
+                    <div class="calculator-card">
+                        <div class="calculator-header">
+                            <h1 class="calculator-title">投资收益计算器</h1>
+                            <p class="calculator-description">
+                                计算投资收益率、未来价值和投资回报，支持一次性投资和定期定额投资。
+                            </p>
+                        </div>
+                        
+                        <!-- 计算类型选择 -->
+                        <div class="tabs" id="investmentTabs">
+                            <button class="tab active" data-type="future">未来价值计算</button>
+                            <button class="tab" data-type="rate">收益率计算</button>
+                            <button class="tab" data-type="compare">投资对比</button>
+                        </div>
+                        
+                        <!-- 未来价值计算 -->
+                        <div id="futureSection">
+                            <div class="input-group">
+                                <label class="input-label">投资类型</label>
+                                <div class="investment-type">
+                                    <label class="investment-type-label">
+                                        <input type="radio" name="investmentType" value="lump" checked>
+                                        <span class="investment-type-content">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                            <span>一次性投资</span>
+                                        </span>
+                                    </label>
+                                    <label class="investment-type-label">
+                                        <input type="radio" name="investmentType" value="regular">
+                                        <span class="investment-type-content">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <span>定期定额投资</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- 一次性投资选项 -->
+                            <div id="lumpOptions">
+                                <div class="input-group">
+                                    <label class="input-label">初始投资金额 (元)</label>
+                                    <input type="number" id="lumpAmount" class="input-field" placeholder="例如：10000" value="10000">
+                                </div>
+                            </div>
+                            
+                            <!-- 定期定额投资选项 -->
+                            <div id="regularOptions" style="display: none;">
+                                <div class="input-group">
+                                    <label class="input-label">每期投资金额 (元)</label>
+                                    <input type="number" id="regularAmount" class="input-field" placeholder="例如：1000" value="1000">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">投资频率</label>
+                                    <select id="investmentFrequency" class="input-field">
+                                        <option value="monthly">每月</option>
+                                        <option value="quarterly">每季度</option>
+                                        <option value="yearly">每年</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">投资期数</label>
+                                    <input type="number" id="investmentPeriods" class="input-field" placeholder="例如：12" value="12">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">年化收益率 (%)</label>
+                                <input type="number" id="annualReturn" class="input-field" placeholder="例如：8.0" value="8.0" step="0.1">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">投资年限</label>
+                                <input type="number" id="investmentYears" class="input-field" placeholder="例如：5" value="5">
+                            </div>
+                        </div>
+                        
+                        <!-- 收益率计算 -->
+                        <div id="rateSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">初始投资金额 (元)</label>
+                                <input type="number" id="rateInitial" class="input-field" placeholder="例如：10000" value="10000">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">当前/最终价值 (元)</label>
+                                <input type="number" id="rateFinal" class="input-field" placeholder="例如：15000" value="15000">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">投资年限</label>
+                                <input type="number" id="rateYears" class="input-field" placeholder="例如：3" value="3">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">是否考虑定期追加投资</label>
+                                <select id="rateAdditional" class="input-field">
+                                    <option value="no">否，仅一次性投资</option>
+                                    <option value="yes">是，有定期追加</option>
+                                </select>
+                            </div>
+                            
+                            <!-- 定期追加投资选项 -->
+                            <div id="additionalOptions" style="display: none;">
+                                <div class="input-group">
+                                    <label class="input-label">每月追加金额 (元)</label>
+                                    <input type="number" id="monthlyAdditional" class="input-field" placeholder="例如：500" value="500">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 投资对比 -->
+                        <div id="compareSection" style="display: none;">
+                            <div class="compare-plans">
+                                <div class="compare-plan">
+                                    <h4 class="plan-title">方案A：低风险投资</h4>
+                                    <div class="input-group">
+                                        <label class="input-label">初始投资 (元)</label>
+                                        <input type="number" id="compareA_initial" class="input-field" placeholder="10000" value="10000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">年化收益率 (%)</label>
+                                        <input type="number" id="compareA_rate" class="input-field" placeholder="4.0" value="4.0" step="0.1">
+                                    </div>
+                                </div>
+                                
+                                <div class="compare-plan">
+                                    <h4 class="plan-title">方案B：中风险投资</h4>
+                                    <div class="input-group">
+                                        <label class="input-label">初始投资 (元)</label>
+                                        <input type="number" id="compareB_initial" class="input-field" placeholder="10000" value="10000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">年化收益率 (%)</label>
+                                        <input type="number" id="compareB_rate" class="input-field" placeholder="8.0" value="8.0" step="0.1">
+                                    </div>
+                                </div>
+                                
+                                <div class="compare-plan">
+                                    <h4 class="plan-title">方案C：高风险投资</h4>
+                                    <div class="input-group">
+                                        <label class="input-label">初始投资 (元)</label>
+                                        <input type="number" id="compareC_initial" class="input-field" placeholder="10000" value="10000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">年化收益率 (%)</label>
+                                        <input type="number" id="compareC_rate" class="input-field" placeholder="12.0" value="12.0" step="0.1">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">投资年限</label>
+                                <input type="number" id="compareYears" class="input-field" placeholder="例如：10" value="10">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">每月追加投资 (元)</label>
+                                <input type="number" id="compareMonthly" class="input-field" placeholder="例如：1000" value="1000">
+                            </div>
+                        </div>
+                        
+                        <!-- 计算按钮 -->
+                        <button class="btn btn-primary btn-block calc-btn" id="calculateBtn">
+                            <i class="fas fa-chart-line"></i> 计算投资收益
+                        </button>
+                        
+                        <!-- 结果展示 -->
+                        <div class="result-display" id="resultSection" style="display: none;">
+                            <h3 class="result-title"><i class="fas fa-chart-bar"></i> 计算结果</h3>
+                            
+                            <!-- 未来价值结果 -->
+                            <div id="futureResult" style="display: block;">
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">投资总额</span>
+                                        <span class="result-value" id="totalInvestment">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">投资收益</span>
+                                        <span class="result-value" id="investmentReturn">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">未来价值</span>
+                                        <span class="result-value" id="futureValue">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">年化收益率</span>
+                                        <span class="result-value" id="effectiveReturn">0.00%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 定期定额投资明细 -->
+                                <div id="regularDetails" style="display: none; margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">定期投资明细</h4>
+                                    <div class="result-grid">
+                                        <div class="result-item">
+                                            <span class="result-label">总投入期数</span>
+                                            <span class="result-value" id="totalPeriods">0 期</span>
+                                        </div>
+                                        <div class="result-item">
+                                            <span class="result-label">每期金额</span>
+                                            <span class="result-value" id="periodAmount">0.00 元</span>
+                                        </div>
+                                        <div class="result-item">
+                                            <span class="result-label">总投资额</span>
+                                            <span class="result-value" id="totalContribution">0.00 元</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 收益增长图表 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">收益增长趋势</h4>
+                                    <div class="chart-container">
+                                        <canvas id="growthChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 收益率计算结果 -->
+                            <div id="rateResult" style="display: none;">
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">初始投资</span>
+                                        <span class="result-value" id="initialInvestment">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">最终价值</span>
+                                        <span class="result-value" id="finalValue">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">投资回报</span>
+                                        <span class="result-value" id="totalGain">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">年化收益率</span>
+                                        <span class="result-value" id="annualizedRate">0.00%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="alert alert-success mt-4">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-chart-line mr-3"></i>
+                                        <div>
+                                            <strong>投资绩效评估：</strong>
+                                            <span id="performanceRating">一般</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 投资对比结果 -->
+                            <div id="compareResult" style="display: none;">
+                                <div class="comparison-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>投资方案</th>
+                                                <th>年化收益率</th>
+                                                <th>最终价值</th>
+                                                <th>投资回报</th>
+                                                <th>回报率</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>方案A：低风险</td>
+                                                <td id="compareRateA">0.00%</td>
+                                                <td id="compareValueA">0.00元</td>
+                                                <td id="compareReturnA">0.00元</td>
+                                                <td id="compareRatioA">0.00%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>方案B：中风险</td>
+                                                <td id="compareRateB">0.00%</td>
+                                                <td id="compareValueB">0.00元</td>
+                                                <td id="compareReturnB">0.00元</td>
+                                                <td id="compareRatioB">0.00%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>方案C：高风险</td>
+                                                <td id="compareRateC">0.00%</td>
+                                                <td id="compareValueC">0.00元</td>
+                                                <td id="compareReturnC">0.00元</td>
+                                                <td id="compareRatioC">0.00%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!-- 对比图表 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">投资方案对比</h4>
+                                    <div class="chart-container">
+                                        <canvas id="comparisonChart"></canvas>
+                                    </div>
+                                </div>
+                                
+                                <!-- 推荐方案 -->
+                                <div class="recommendation" id="investmentRecommendation">
+                                    <h4 class="result-title" style="font-size: 1rem; margin-top: 1.5rem;">
+                                        <i class="fas fa-lightbulb"></i> 投资建议
+                                    </h4>
+                                    <p id="recommendationText">根据计算结果...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 使用说明 -->
+                    <div class="alert alert-info mt-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-lightbulb mr-3"></i>
+                            <div>
+                                <strong>使用说明：</strong> 
+                                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                    <li><strong>未来价值计算</strong>：根据预期收益率计算投资的未来价值</li>
+                                    <li><strong>收益率计算</strong>：根据投资金额和最终价值计算年化收益率</li>
+                                    <li><strong>投资对比</strong>：比较不同风险等级的投资方案</li>
+                                    <li>投资有风险，计算结果仅供参考，实际收益可能有所不同</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <a href="../../index.html" class="footer-logo">
+                        <i class="fas fa-calculator"></i>
+                        <span>生活计算宝典</span>
+                    </a>
+                    <p class="footer-description">
+                        一站式离线计算工具集合，为您的生活带来便利。
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">理财工具</h4>
+                    <a href="interest.html" class="footer-link">利息计算器</a>
+                    <a href="loan-compare.html" class="footer-link">贷款对比</a>
+                    <a href="investment.html" class="footer-link">投资收益计算</a>
+                    <a href="compound.html" class="footer-link">复利计算</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">快速链接</h4>
+                    <a href="../../pages/finance.html" class="footer-link">返回理财金融</a>
+                    <a href="../../pages/tools.html" class="footer-link">所有工具</a>
+                    <a href="https://github.com/laddzhao/life-calculators" target="_blank" class="footer-link">GitHub项目</a>
+                    <a href="../../404.html" class="footer-link">404页面</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">其他工具</h4>
+                    <a href="../home/utility-bill.html" class="footer-link">水电费计算</a>
+                    <a href="../shopping/discount.html" class="footer-link">折扣计算器</a>
+                    <a href="../health/bmi.html" class="footer-link">BMI计算</a>
+                    <a href="../professional/mortgage.html" class="footer-link">房贷计算器</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 生活计算宝典 · 投资收益计算器</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 移动端底部导航 -->
+    <nav class="mobile-bottom-nav">
+        <a href="../../index.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-label">首页</span>
+        </a>
+        <a href="../../pages/shopping.html" class="nav-item">
+            <i class="fas fa-shopping-cart nav-icon"></i>
+            <span class="nav-label">购物</span>
+        </a>
+        <a href="../../pages/finance.html" class="nav-item active">
+            <i class="fas fa-chart-line nav-icon"></i>
+            <span class="nav-label">理财</span>
+        </a>
+        <a href="../../pages/tools.html" class="nav-item">
+            <i class="fas fa-th nav-icon"></i>
+            <span class="nav-label">全部</span>
+        </a>
+        <a href="#" class="nav-item" id="mobileMenuBtn">
+            <i class="fas fa-ellipsis-h nav-icon"></i>
+            <span class="nav-label">更多</span>
+        </a>
+    </nav>
+
+    <!-- 图表库 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // 标签页切换
+        document.querySelectorAll('#investmentTabs .tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有active类
+                document.querySelectorAll('#investmentTabs .tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // 添加active类到当前标签
+                this.classList.add('active');
+                
+                const type = this.dataset.type;
+                
+                // 显示对应的内容区域
+                document.querySelectorAll('[id$="Section"]').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                document.getElementById(type + 'Section').style.display = 'block';
+                
+                // 显示对应的结果区域
+                document.querySelectorAll('[id$="Result"]').forEach(result => {
+                    result.style.display = 'none';
+                });
+                
+                document.getElementById(type + 'Result').style.display = 'block';
+                
+                // 显示结果区域
+                document.getElementById('resultSection').style.display = 'block';
+            });
+        });
+        
+        // 投资类型切换
+        document.querySelectorAll('input[name="investmentType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'lump') {
+                    document.getElementById('lumpOptions').style.display = 'block';
+                    document.getElementById('regularOptions').style.display = 'none';
+                    document.getElementById('regularDetails').style.display = 'none';
+                } else {
+                    document.getElementById('lumpOptions').style.display = 'none';
+                    document.getElementById('regularOptions').style.display = 'block';
+                    document.getElementById('regularDetails').style.display = 'block';
+                }
+            });
+        });
+        
+        // 收益率计算中定期追加选项
+        document.getElementById('rateAdditional').addEventListener('change', function() {
+            if (this.value === 'yes') {
+                document.getElementById('additionalOptions').style.display = 'block';
+            } else {
+                document.getElementById('additionalOptions').style.display = 'none';
+            }
+        });
+        
+        // 计算投资收益
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const activeTab = document.querySelector('#investmentTabs .tab.active').dataset.type;
+            
+            if (activeTab === 'future') {
+                calculateFutureValue();
+            } else if (activeTab === 'rate') {
+                calculateReturnRate();
+            } else if (activeTab === 'compare') {
+                calculateInvestmentComparison();
+            }
+            
+            // 显示结果区域
+            document.getElementById('resultSection').style.display = 'block';
+        });
+        
+        // 计算未来价值
+        function calculateFutureValue() {
+            const investmentType = document.querySelector('input[name="investmentType"]:checked').value;
+            const annualReturn = parseFloat(document.getElementById('annualReturn').value) || 0;
+            const years = parseFloat(document.getElementById('investmentYears').value) || 0;
+            
+            let totalInvestment = 0;
+            let futureValue = 0;
+            let investmentReturn = 0;
+            
+            if (investmentType === 'lump') {
+                // 一次性投资
+                const lumpAmount = parseFloat(document.getElementById('lumpAmount').value) || 0;
+                totalInvestment = lumpAmount;
+                
+                // 未来价值公式: FV = PV * (1 + r)^n
+                const rate = annualReturn / 100;
+                futureValue = lumpAmount * Math.pow(1 + rate, years);
+                investmentReturn = futureValue - lumpAmount;
+                
+                // 隐藏定期投资明细
+                document.getElementById('regularDetails').style.display = 'none';
+            } else {
+                // 定期定额投资
+                const regularAmount = parseFloat(document.getElementById('regularAmount').value) || 0;
+                const frequency = document.getElementById('investmentFrequency').value;
+                const periods = parseFloat(document.getElementById('investmentPeriods').value) || 0;
+                
+                let periodsPerYear = 12;
+                switch(frequency) {
+                    case 'monthly': periodsPerYear = 12; break;
+                    case 'quarterly': periodsPerYear = 4; break;
+                    case 'yearly': periodsPerYear = 1; break;
+                }
+                
+                const ratePerPeriod = annualReturn / 100 / periodsPerYear;
+                const totalPeriods = periodsPerYear * years;
+                totalInvestment = regularAmount * periods;
+                
+                // 定期定额未来价值公式: FV = P * [(1 + r)^n - 1] / r
+                futureValue = regularAmount * (Math.pow(1 + ratePerPeriod, totalPeriods) - 1) / ratePerPeriod;
+                investmentReturn = futureValue - totalInvestment;
+                
+                // 显示定期投资明细
+                document.getElementById('regularDetails').style.display = 'block';
+                document.getElementById('totalPeriods').textContent = Math.round(totalPeriods) + ' 期';
+                document.getElementById('periodAmount').textContent = regularAmount.toFixed(2) + ' 元';
+                document.getElementById('totalContribution').textContent = totalInvestment.toFixed(2) + ' 元';
+            }
+            
+            // 计算年化收益率
+            const effectiveReturn = (Math.pow(futureValue / totalInvestment, 1 / years) - 1) * 100;
+            
+            // 显示结果
+            document.getElementById('totalInvestment').textContent = totalInvestment.toFixed(2) + ' 元';
+            document.getElementById('investmentReturn').textContent = investmentReturn.toFixed(2) + ' 元';
+            document.getElementById('futureValue').textContent = futureValue.toFixed(2) + ' 元';
+            document.getElementById('effectiveReturn').textContent = effectiveReturn.toFixed(2) + '%';
+            
+            // 绘制增长图表
+            drawGrowthChart(investmentType, annualReturn, years, totalInvestment, futureValue);
+        }
+        
+        // 计算收益率
+        function calculateReturnRate() {
+            const initial = parseFloat(document.getElementById('rateInitial').value) || 0;
+            const final = parseFloat(document.getElementById('rateFinal').value) || 0;
+            const years = parseFloat(document.getElementById('rateYears').value) || 0;
+            const hasAdditional = document.getElementById('rateAdditional').value === 'yes';
+            
+            let totalInvestment = initial;
+            let annualizedRate = 0;
+            
+            if (hasAdditional) {
+                // 有定期追加投资
+                const monthlyAdditional = parseFloat(document.getElementById('monthlyAdditional').value) || 0;
+                totalInvestment = initial + monthlyAdditional * 12 * years;
+                
+                // 简化的收益率计算（实际计算需要迭代）
+                // 这里使用近似公式
+                const averageInvestment = (initial + final) / 2;
+                annualizedRate = ((final - totalInvestment) / averageInvestment) * 100 / years;
+            } else {
+                // 一次性投资
+                // 年化收益率公式: r = (FV/PV)^(1/n) - 1
+                annualizedRate = (Math.pow(final / initial, 1 / years) - 1) * 100;
+            }
+            
+            const totalGain = final - totalInvestment;
+            
+            // 显示结果
+            document.getElementById('initialInvestment').textContent = totalInvestment.toFixed(2) + ' 元';
+            document.getElementById('finalValue').textContent = final.toFixed(2) + ' 元';
+            document.getElementById('totalGain').textContent = totalGain.toFixed(2) + ' 元';
+            document.getElementById('annualizedRate').textContent = annualizedRate.toFixed(2) + '%';
+            
+            // 绩效评估
+            let performanceRating = '较差';
+            let ratingClass = 'alert-danger';
+            
+            if (annualizedRate < 0) {
+                performanceRating = '亏损';
+                ratingClass = 'alert-danger';
+            } else if (annualizedRate < 4) {
+                performanceRating = '较差';
+                ratingClass = 'alert-warning';
+            } else if (annualizedRate < 8) {
+                performanceRating = '一般';
+                ratingClass = 'alert-info';
+            } else if (annualizedRate < 12) {
+                performanceRating = '良好';
+                ratingClass = 'alert-success';
+            } else {
+                performanceRating = '优秀';
+                ratingClass = 'alert-success';
+            }
+            
+            document.getElementById('performanceRating').textContent = performanceRating;
+            document.getElementById('performanceRating').parentElement.parentElement.className = `alert ${ratingClass} mt-4`;
+        }
+        
+        // 计算投资对比
+        function calculateInvestmentComparison() {
+            // 获取输入数据
+            const initialA = parseFloat(document.getElementById('compareA_initial').value) || 0;
+            const rateA = parseFloat(document.getElementById('compareA_rate').value) || 0;
+            const initialB = parseFloat(document.getElementById('compareB_initial').value) || 0;
+            const rateB = parseFloat(document.getElementById('compareB_rate').value) || 0;
+            const initialC = parseFloat(document.getElementById('compareC_initial').value) || 0;
+            const rateC = parseFloat(document.getElementById('compareC_rate').value) || 0;
+            const years = parseFloat(document.getElementById('compareYears').value) || 0;
+            const monthly = parseFloat(document.getElementById('compareMonthly').value) || 0;
+            
+            // 计算各方案
+            const monthlyAddition = monthly;
+            const monthlyRateA = rateA / 100 / 12;
+            const monthlyRateB = rateB / 100 / 12;
+            const monthlyRateC = rateC / 100 / 12;
+            const months = years * 12;
+            
+            // 计算各方案的未来价值（考虑定期追加）
+            const futureValueA = calculateFutureValueWithContributions(initialA, monthlyRateA, monthlyAddition, months);
+            const futureValueB = calculateFutureValueWithContributions(initialB, monthlyRateB, monthlyAddition, months);
+            const futureValueC = calculateFutureValueWithContributions(initialC, monthlyRateC, monthlyAddition, months);
+            
+            // 总投资额（相同）
+            const totalContribution = initialA + monthlyAddition * months;
+            
+            // 计算回报和回报率
+            const returnA = futureValueA - totalContribution;
+            const returnB = futureValueB - totalContribution;
+            const returnC = futureValueC - totalContribution;
+            
+            const ratioA = (returnA / totalContribution) * 100;
+            const ratioB = (returnB / totalContribution) * 100;
+            const ratioC = (returnC / totalContribution) * 100;
+            
+            // 显示结果
+            document.getElementById('compareRateA').textContent = rateA.toFixed(2) + '%';
+            document.getElementById('compareValueA').textContent = futureValueA.toFixed(2) + '元';
+            document.getElementById('compareReturnA').textContent = returnA.toFixed(2) + '元';
+            document.getElementById('compareRatioA').textContent = ratioA.toFixed(2) + '%';
+            
+            document.getElementById('compareRateB').textContent = rateB.toFixed(2) + '%';
+            document.getElementById('compareValueB').textContent = futureValueB.toFixed(2) + '元';
+            document.getElementById('compareReturnB').textContent = returnB.toFixed(2) + '元';
+            document.getElementById('compareRatioB').textContent = ratioB.toFixed(2) + '%';
+            
+            document.getElementById('compareRateC').textContent = rateC.toFixed(2) + '%';
+            document.getElementById('compareValueC').textContent = futureValueC.toFixed(2) + '元';
+            document.getElementById('compareReturnC').textContent = returnC.toFixed(2) + '元';
+            document.getElementById('compareRatioC').textContent = ratioC.toFixed(2) + '%';
+            
+            // 绘制对比图表
+            drawComparisonChart(years, futureValueA, futureValueB, futureValueC);
+            
+            // 提供建议
+            let recommendation = '';
+            if (rateC <= 8) {
+                recommendation = '当前风险溢价较低，建议选择<strong>方案B（中风险）</strong>平衡收益与风险。';
+            } else if (rateC - rateB > 4) {
+                recommendation = '高风险方案预期收益较高，但风险较大。建议选择<strong>方案B（中风险）</strong>作为核心配置。';
+            } else {
+                recommendation = '各方案收益差异不大，建议选择<strong>方案A（低风险）</strong>确保资金安全。';
+            }
+            
+            recommendation += ` 经过${years}年投资，方案C的预期价值最高（${futureValueC.toFixed(2)}元）。`;
+            document.getElementById('recommendationText').innerHTML = recommendation;
+        }
+        
+        // 计算带定期追加的未来价值
+        function calculateFutureValueWithContributions(initial, monthlyRate, monthlyContribution, months) {
+            // 初始投资的未来价值
+            const futureInitial = initial * Math.pow(1 + monthlyRate, months);
+            
+            // 定期追加的未来价值
+            const futureContributions = monthlyContribution * (Math.pow(1 + monthlyRate, months) - 1) / monthlyRate;
+            
+            return futureInitial + futureContributions;
+        }
+        
+        // 绘制增长图表
+        function drawGrowthChart(investmentType, annualReturn, years, totalInvestment, futureValue) {
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            
+            // 生成年份数据
+            const labels = [];
+            const data = [];
+            
+            for (let i = 0; i <= years; i++) {
+                labels.push(`第${i}年`);
+                if (investmentType === 'lump') {
+                    const lumpAmount = parseFloat(document.getElementById('lumpAmount').value) || 0;
+                    data.push(lumpAmount * Math.pow(1 + annualReturn / 100, i));
+                } else {
+                    const regularAmount = parseFloat(document.getElementById('regularAmount').value) || 0;
+                    const frequency = document.getElementById('investmentFrequency').value;
+                    let periodsPerYear = 12;
+                    
+                    switch(frequency) {
+                        case 'monthly': periodsPerYear = 12; break;
+                        case 'quarterly': periodsPerYear = 4; break;
+                        case 'yearly': periodsPerYear = 1; break;
+                    }
+                    
+                    const ratePerPeriod = annualReturn / 100 / periodsPerYear;
+                    const totalPeriods = periodsPerYear * i;
+                    const yearValue = regularAmount * (Math.pow(1 + ratePerPeriod, totalPeriods) - 1) / ratePerPeriod;
+                    data.push(yearValue);
+                }
+            }
+            
+            // 如果已有图表实例，销毁它
+            if (window.growthChartInstance) {
+                window.growthChartInstance.destroy();
+            }
+            
+            // 创建新图表
+            window.growthChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '投资价值增长曲线',
+                        data: data,
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `投资价值: ${context.raw.toFixed(2)}元`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString() + '元';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 绘制对比图表
+        function drawComparisonChart(years, valueA, valueB, valueC) {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            
+            // 如果已有图表实例，销毁它
+            if (window.comparisonChartInstance) {
+                window.comparisonChartInstance.destroy();
+            }
+            
+            // 创建新图表
+            window.comparisonChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['低风险方案', '中风险方案', '高风险方案'],
+                    datasets: [{
+                        label: `投资${years}年后价值`,
+                        data: [valueA, valueB, valueC],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.5)',
+                            'rgba(16, 185, 129, 0.5)',
+                            'rgba(239, 68, 68, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgb(59, 130, 246)',
+                            'rgb(16, 185, 129)',
+                            'rgb(239, 68, 68)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `最终价值: ${context.raw.toFixed(2)}元`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString() + '元';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 主题切换
+        function initTheme() {
+            const themeBtn = document.querySelector('.theme-btn');
+            
+            // 检查本地存储的主题设置
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            
+            // 切换主题函数
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新图标
+                if (themeBtn) {
+                    const icon = themeBtn.querySelector('i');
+                    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+            
+            // 添加事件监听
+            if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            
+            // 页面加载时自动计算一次
+            document.getElementById('calculateBtn').click();
+        });
+    </script>
+    
+    <style>
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .tab:hover {
+            color: var(--primary);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .investment-type {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        
+        .investment-type-label {
+            display: block;
+            cursor: pointer;
+        }
+        
+        .investment-type-label input {
+            display: none;
+        }
+        
+        .investment-type-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius);
+            background: var(--bg-primary);
+            transition: all var(--transition);
+        }
+        
+        .investment-type-label input:checked + .investment-type-content {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+        }
+        
+        .investment-type-content i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .investment-type-content span {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .compare-plans {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .compare-plans {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .compare-plan {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 1rem;
+            border: 1px solid var(--border-light);
+        }
+        
+        .plan-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin-top: 0.5rem;
+        }
+        
+        .comparison-table {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .comparison-table th {
+            font-weight: 600;
+            color: var(--text-primary);
+            background-color: var(--gray-50);
+        }
+        
+        .comparison-table tr:hover {
+            background-color: var(--gray-50);
+        }
+        
+        .recommendation {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 1.5rem;
+        }
+        
+        .recommendation p {
+            margin-bottom: 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        @media (max-width: 640px) {
+            .investment-type {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                font-size: 0.875rem;
+            }
+            
+            .tab {
+                padding: 0.5rem 1rem;
+            }
+            
+            .chart-container {
+                height: 150px;
+            }
+            
+            .comparison-table {
+                font-size: 0.75rem;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</body>
+</html>
