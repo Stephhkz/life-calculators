@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投资回报率(ROI) - 生活计算宝典</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../layout.css">
+    <link rel="stylesheet" href="../../components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body class="app">
+    <header class="app-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-mobile">
+                    <a href="../../pages/finance.html" class="navbar-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="navbar-title">投资回报率(ROI)</div>
+                    <div></div>
+                </div>
+                
+                <div class="navbar-desktop">
+                    <a href="../../index.html" class="logo">
+                        <i class="fas fa-calculator"></i>
+                        <span class="logo-text">生活计算宝典</span>
+                    </a>
+                    <div class="nav-links">
+                        <a href="../../index.html" class="nav-link">首页</a>
+                        <a href="../../pages/finance.html" class="nav-link active">理财金融</a>
+                        <a href="../../pages/shopping.html" class="nav-link">消费购物</a>
+                        <a href="../../pages/tools.html" class="nav-link">所有工具</a>
+                    </div>
+                    <div class="theme-toggle">
+                        <button class="theme-btn" aria-label="切换主题">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <section class="section">
+            <div class="container">
+                <!-- 面包屑导航 -->
+                <nav class="breadcrumb">
+                    <a href="../../index.html" class="breadcrumb-link">首页</a>
+                    <span class="breadcrumb-divider"><i class="fas fa-chevron-right"></i></span>
+                    <a href="../../pages/finance.html" class="breadcrumb-link">理财金融</a>
+                    <span class="breadcrumb-divider"><i class="fas fa-chevron-right"></i></span>
+                    <span class="breadcrumb-current">投资回报率(ROI)</span>
+                </nav>
+                
+                <!-- 计算器容器 -->
+                <div class="calculator-container">
+                    <div class="calculator-card">
+                        <div class="calculator-header">
+                            <h1 class="calculator-title">投资回报率(ROI)计算器</h1>
+                            <p class="calculator-description">
+                                计算投资收益率，评估投资项目的盈利能力
+                            </p>
+                        </div>
+                        
+                        <!-- 计算类型选择 -->
+                        <div class="tabs" id="roiTabs">
+                            <button class="tab active" data-type="simple">简单ROI</button>
+                            <button class="tab" data-type="annualized">年化ROI</button>
+                            <button class="tab" data-type="compare">投资比较</button>
+                            <button class="tab" data-type="multiple">多期投资</button>
+                        </div>
+                        
+                        <!-- 简单ROI计算 -->
+                        <div id="simpleSection">
+                            <div class="input-group">
+                                <label class="input-label">初始投资金额 (元)</label>
+                                <input type="number" id="initialInvestment" class="input-field" placeholder="例如：100000" value="100000">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">最终价值 (元)</label>
+                                <input type="number" id="finalValue" class="input-field" placeholder="例如：150000" value="150000">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">投资成本 (元)</label>
+                                <input type="number" id="investmentCost" class="input-field" placeholder="例如：5000" value="5000">
+                                <small class="input-hint">包括交易费、管理费等额外成本</small>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">投资期限 (年)</label>
+                                <input type="number" id="simpleYears" class="input-field" placeholder="例如：5" value="5">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">考虑通货膨胀</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="inflationToggle">
+                                    <label for="inflationToggle" class="toggle-slider"></label>
+                                    <span class="toggle-label">调整通货膨胀</span>
+                                </div>
+                            </div>
+                            
+                            <!-- 通货膨胀选项 -->
+                            <div id="inflationOptions" style="display: none;">
+                                <div class="input-group">
+                                    <label class="input-label">年平均通胀率 (%)</label>
+                                    <input type="number" id="inflationRate" class="input-field" placeholder="例如：3.0" value="3.0" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 年化ROI计算 -->
+                        <div id="annualizedSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">初始投资金额 (元)</label>
+                                <input type="number" id="annualizedInitial" class="input-field" placeholder="例如：100000" value="100000">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">最终价值 (元)</label>
+                                <input type="number" id="annualizedFinal" class="input-field" placeholder="例如：200000" value="200000">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">投资期限</label>
+                                <div class="input-row">
+                                    <input type="number" id="investmentPeriod" class="input-field" placeholder="例如：5" value="5">
+                                    <select id="periodUnit" class="input-field">
+                                        <option value="years">年</option>
+                                        <option value="months">月</option>
+                                        <option value="days">天</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">复利频率</label>
+                                <select id="roiCompoundFrequency" class="input-field">
+                                    <option value="yearly">每年复利</option>
+                                    <option value="quarterly">每季度复利</option>
+                                    <option value="monthly">每月复利</option>
+                                    <option value="daily">每日复利</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">考虑定期追加</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="additionalToggle">
+                                    <label for="additionalToggle" class="toggle-slider"></label>
+                                    <span class="toggle-label">有定期追加投资</span>
+                                </div>
+                            </div>
+                            
+                            <!-- 定期追加选项 -->
+                            <div id="additionalOptions" style="display: none;">
+                                <div class="input-group">
+                                    <label class="input-label">每期追加金额 (元)</label>
+                                    <input type="number" id="additionalAmount" class="input-field" placeholder="例如：1000" value="1000">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">追加频率</label>
+                                    <select id="additionalFrequency" class="input-field">
+                                        <option value="monthly">每月追加</option>
+                                        <option value="quarterly">每季度追加</option>
+                                        <option value="yearly">每年追加</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 投资比较计算 -->
+                        <div id="compareSection" style="display: none;">
+                            <div class="compare-options">
+                                <h4 class="section-title" style="font-size: 1rem; margin-bottom: 1rem;">投资方案A</h4>
+                                <div class="input-row">
+                                    <div class="input-group">
+                                        <label class="input-label">初始投资 (元)</label>
+                                        <input type="number" id="compareAInitial" class="input-field" placeholder="例如：100000" value="100000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">年收益率 (%)</label>
+                                        <input type="number" id="compareARate" class="input-field" placeholder="例如：8.0" value="8.0" step="0.1">
+                                    </div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">投资期限 (年)</label>
+                                    <input type="number" id="compareAYears" class="input-field" placeholder="例如：10" value="10">
+                                </div>
+                                
+                                <h4 class="section-title" style="font-size: 1rem; margin-top: 1.5rem; margin-bottom: 1rem;">投资方案B</h4>
+                                <div class="input-row">
+                                    <div class="input-group">
+                                        <label class="input-label">初始投资 (元)</label>
+                                        <input type="number" id="compareBInitial" class="input-field" placeholder="例如：100000" value="100000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">年收益率 (%)</label>
+                                        <input type="number" id="compareBRate" class="input-field" placeholder="例如：6.0" value="6.0" step="0.1">
+                                    </div>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">投资期限 (年)</label>
+                                    <input type="number" id="compareBYears" class="input-field" placeholder="例如：10" value="10">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">比较类型</label>
+                                    <select id="compareType" class="input-field">
+                                        <option value="final">最终价值比较</option>
+                                        <option value="rate">相同最终价值比较</option>
+                                        <option value="time">相同收益率比较</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 多期投资计算 -->
+                        <div id="multipleSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">投资现金流</label>
+                                <div class="cashflow-input">
+                                    <div class="cashflow-row">
+                                        <span>第0年（初始投资）</span>
+                                        <input type="number" id="cashflow0" class="cashflow-field" placeholder="例如：-100000" value="-100000">
+                                    </div>
+                                    <div class="cashflow-row">
+                                        <span>第1年</span>
+                                        <input type="number" id="cashflow1" class="cashflow-field" placeholder="例如：20000" value="20000">
+                                    </div>
+                                    <div class="cashflow-row">
+                                        <span>第2年</span>
+                                        <input type="number" id="cashflow2" class="cashflow-field" placeholder="例如：25000" value="25000">
+                                    </div>
+                                    <div class="cashflow-row">
+                                        <span>第3年</span>
+                                        <input type="number" id="cashflow3" class="cashflow-field" placeholder="例如：30000" value="30000">
+                                    </div>
+                                    <div class="cashflow-row">
+                                        <span>第4年</span>
+                                        <input type="number" id="cashflow4" class="cashflow-field" placeholder="例如：35000" value="35000">
+                                    </div>
+                                    <div class="cashflow-row">
+                                        <span>第5年</span>
+                                        <input type="number" id="cashflow5" class="cashflow-field" placeholder="例如：40000" value="40000">
+                                    </div>
+                                    <small class="input-hint">负值表示投资支出，正值表示投资回报</small>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">贴现率/要求收益率 (%)</label>
+                                <input type="number" id="discountRate" class="input-field" placeholder="例如：10.0" value="10.0" step="0.1">
+                            </div>
+                        </div>
+                        
+                        <!-- 计算按钮 -->
+                        <button class="btn btn-primary btn-block calc-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> 计算投资回报率
+                        </button>
+                        
+                        <!-- 结果展示 -->
+                        <div class="result-display" id="resultSection" style="display: none;">
+                            <h3 class="result-title"><i class="fas fa-chart-bar"></i> 计算结果</h3>
+                            
+                            <!-- 简单ROI结果 -->
+                            <div id="simpleResult" style="display: block;">
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">投资总额</span>
+                                        <span class="result-value" id="totalInvestment">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">净收益</span>
+                                        <span class="result-value" id="netProfit">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">简单ROI</span>
+                                        <span class="result-value" id="simpleROI">0.00%</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">年化收益率</span>
+                                        <span class="result-value" id="simpleAnnualized">0.00%</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">投资回收期</span>
+                                        <span class="result-value" id="paybackPeriod">0.00 年</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通货膨胀调整结果 -->
+                                <div id="inflationResult" style="display: none; margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">通货膨胀调整后</h4>
+                                    <div class="result-grid">
+                                        <div class="result-item">
+                                            <span class="result-label">实际净收益</span>
+                                            <span class="result-value" id="realNetProfit">0.00 元</span>
+                                        </div>
+                                        <div class="result-item">
+                                            <span class="result-label">实际ROI</span>
+                                            <span class="result-value" id="realROI">0.00%</span>
+                                        </div>
+                                        <div class="result-item">
+                                            <span class="result-label">实际年化收益率</span>
+                                            <span class="result-value" id="realAnnualized">0.00%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 投资收益分析 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">投资收益分析</h4>
+                                    <div class="roi-analysis">
+                                        <div class="analysis-item">
+                                            <div class="analysis-title">收益率水平</div>
+                                            <div class="analysis-value" id="roiLevel">一般</div>
+                                        </div>
+                                        <div class="analysis-item">
+                                            <div class="analysis-title">风险调整后收益</div>
+                                            <div class="analysis-value" id="riskAdjustedReturn">中等</div>
+                                        </div>
+                                        <div class="analysis-item">
+                                            <div class="analysis-title">投资吸引力</div>
+                                            <div class="analysis-value" id="investmentAttractiveness">中等</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 年化ROI结果 -->
+                            <div id="annualizedResult" style="display: none;">
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">初始投资</span>
+                                        <span class="result-value" id="annualizedInitialResult">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">最终价值</span>
+                                        <span class="result-value" id="annualizedFinalResult">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">投资期限</span>
+                                        <span class="result-value" id="investmentDuration">0 年</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">年化收益率</span>
+                                        <span class="result-value" id="annualizedROI">0.00%</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">总收益率</span>
+                                        <span class="result-value" id="totalReturn">0.00%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 复利效果展示 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">复利效果</h4>
+                                    <div class="compound-effect">
+                                        <div class="effect-item">
+                                            <div class="effect-title">72法则</div>
+                                            <div class="effect-value" id="rule72Result">0.00 年翻倍</div>
+                                        </div>
+                                        <div class="effect-item">
+                                            <div class="effect-title">115法则</div>
+                                            <div class="effect-value" id="rule115Result">0.00 年三倍</div>
+                                        </div>
+                                        <div class="effect-item">
+                                            <div class="effect-title">10年后价值</div>
+                                            <div class="effect-value" id="tenYearValue">0.00 元</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 年化收益图表 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">投资收益增长趋势</h4>
+                                    <div class="chart-container">
+                                        <canvas id="annualizedChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 投资比较结果 -->
+                            <div id="compareResult" style="display: none;">
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">方案A最终价值</span>
+                                        <span class="result-value" id="compareAFinal">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">方案B最终价值</span>
+                                        <span class="result-value" id="compareBFinal">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">价值差异</span>
+                                        <span class="result-value" id="valueDifference">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">方案A年化收益</span>
+                                        <span class="result-value" id="compareAAnnualized">0.00%</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">方案B年化收益</span>
+                                        <span class="result-value" id="compareBAnnualized">0.00%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 比较分析 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">投资方案比较</h4>
+                                    <div class="comparison-analysis">
+                                        <div class="comparison-bar">
+                                            <div class="comparison-label">方案A</div>
+                                            <div class="comparison-bar-bg">
+                                                <div class="comparison-bar-fill" id="barA" style="width: 50%"></div>
+                                            </div>
+                                            <div class="comparison-value" id="valueA">0.00 元</div>
+                                        </div>
+                                        <div class="comparison-bar">
+                                            <div class="comparison-label">方案B</div>
+                                            <div class="comparison-bar-bg">
+                                                <div class="comparison-bar-fill" id="barB" style="width: 50%"></div>
+                                            </div>
+                                            <div class="comparison-value" id="valueB">0.00 元</div>
+                                        </div>
+                                    </div>
+                                    <div class="comparison-conclusion" id="comparisonConclusion">
+                                        方案A比方案B收益更高
+                                    </div>
+                                </div>
+                                
+                                <!-- 比较图表 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">投资收益对比</h4>
+                                    <div class="chart-container">
+                                        <canvas id="compareChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 多期投资结果 -->
+                            <div id="multipleResult" style="display: none;">
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">净现值(NPV)</span>
+                                        <span class="result-value" id="npvValue">0.00 元</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">内部收益率(IRR)</span>
+                                        <span class="result-value" id="irrValue">0.00%</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">盈利指数(PI)</span>
+                                        <span class="result-value" id="piValue">0.00</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">投资回收期</span>
+                                        <span class="result-value" id="dynamicPayback">0.00 年</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 现金流分析 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">现金流分析</h4>
+                                    <div style="overflow-x: auto;">
+                                        <table class="cashflow-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>年份</th>
+                                                    <th>现金流</th>
+                                                    <th>现值(PV)</th>
+                                                    <th>累计现金流</th>
+                                                    <th>累计现值</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cashflowAnalysis">
+                                                <!-- 现金流分析将通过JS动态生成 -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <!-- 投资决策 -->
+                                <div style="margin-top: 1.5rem;">
+                                    <h4 class="result-title" style="font-size: 1rem;">投资决策指标</h4>
+                                    <div class="decision-metrics">
+                                        <div class="metric-item">
+                                            <div class="metric-title">NPV决策</div>
+                                            <div class="metric-value" id="npvDecision">不可行</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-title">IRR决策</div>
+                                            <div class="metric-value" id="irrDecision">不可行</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-title">PI决策</div>
+                                            <div class="metric-value" id="piDecision">不可行</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ROI知识 -->
+                    <div class="alert alert-info mt-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-lightbulb mr-3"></i>
+                            <div>
+                                <strong>投资回报率要点：</strong> 
+                                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                    <li><strong>ROI计算公式</strong>：(收益 - 成本) ÷ 成本 × 100%</li>
+                                    <li><strong>年化收益率</strong>：将总收益率折算为年度收益率，便于比较</li>
+                                    <li><strong>复利效应</strong>：长期投资中，复利能显著提升最终收益</li>
+                                    <li><strong>风险调整</strong>：高收益往往伴随高风险，需评估风险调整后收益</li>
+                                    <li><strong>通货膨胀</strong>：实际收益率 = 名义收益率 - 通货膨胀率</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <a href="../../index.html" class="footer-logo">
+                        <i class="fas fa-calculator"></i>
+                        <span>生活计算宝典</span>
+                    </a>
+                    <p class="footer-description">
+                        一站式离线计算工具集合，为您的生活带来便利。
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">理财工具</h4>
+                    <a href="roi.html" class="footer-link">投资回报率</a>
+                    <a href="inflation.html" class="footer-link">通货膨胀计算</a>
+                    <a href="savings-plan.html" class="footer-link">储蓄计划</a>
+                    <a href="pension.html" class="footer-link">养老金计算</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">快速链接</h4>
+                    <a href="../../pages/finance.html" class="footer-link">返回理财金融</a>
+                    <a href="../../pages/tools.html" class="footer-link">所有工具</a>
+                    <a href="https://github.com/laddzhao/life-calculators" target="_blank" class="footer-link">GitHub项目</a>
+                    <a href="../../404.html" class="footer-link">404页面</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">其他工具</h4>
+                    <a href="../home/utility-bill.html" class="footer-link">水电费计算</a>
+                    <a href="../shopping/discount.html" class="footer-link">折扣计算器</a>
+                    <a href="../health/bmi.html" class="footer-link">BMI计算</a>
+                    <a href="../professional/tax.html" class="footer-link">个税计算器</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 生活计算宝典 · 投资回报率(ROI)计算</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 图表库 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- 移动端底部导航 -->
+    <nav class="mobile-bottom-nav">
+        <a href="../../index.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-label">首页</span>
+        </a>
+        <a href="../../pages/shopping.html" class="nav-item">
+            <i class="fas fa-shopping-cart nav-icon"></i>
+            <span class="nav-label">购物</span>
+        </a>
+        <a href="../../pages/finance.html" class="nav-item active">
+            <i class="fas fa-chart-line nav-icon"></i>
+            <span class="nav-label">理财</span>
+        </a>
+        <a href="../../pages/tools.html" class="nav-item">
+            <i class="fas fa-th nav-icon"></i>
+            <span class="nav-label">全部</span>
+        </a>
+        <a href="#" class="nav-item" id="mobileMenuBtn">
+            <i class="fas fa-ellipsis-h nav-icon"></i>
+            <span class="nav-label">更多</span>
+        </a>
+    </nav>
+
+    <script>
+        // 标签页切换
+        document.querySelectorAll('#roiTabs .tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有active类
+                document.querySelectorAll('#roiTabs .tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // 添加active类到当前标签
+                this.classList.add('active');
+                
+                const type = this.dataset.type;
+                
+                // 显示对应的内容区域
+                document.querySelectorAll('[id$="Section"]').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                document.getElementById(type + 'Section').style.display = 'block';
+                
+                // 显示对应的结果区域
+                document.querySelectorAll('[id$="Result"]').forEach(result => {
+                    result.style.display = 'none';
+                });
+                
+                // 显示结果区域
+                document.getElementById('resultSection').style.display = 'block';
+                
+                // 重新计算
+                setTimeout(() => {
+                    document.getElementById('calculateBtn').click();
+                }, 100);
+            });
+        });
+        
+        // 通货膨胀切换
+        document.getElementById('inflationToggle').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('inflationOptions').style.display = 'block';
+            } else {
+                document.getElementById('inflationOptions').style.display = 'none';
+            }
+        });
+        
+        // 定期追加切换
+        document.getElementById('additionalToggle').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('additionalOptions').style.display = 'block';
+            } else {
+                document.getElementById('additionalOptions').style.display = 'none';
+            }
+        });
+        
+        // 计算投资回报率
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const activeTab = document.querySelector('#roiTabs .tab.active').dataset.type;
+            
+            if (activeTab === 'simple') {
+                calculateSimpleROI();
+            } else if (activeTab === 'annualized') {
+                calculateAnnualizedROI();
+            } else if (activeTab === 'compare') {
+                compareInvestments();
+            } else if (activeTab === 'multiple') {
+                calculateMultiplePeriodROI();
+            }
+            
+            // 显示结果区域
+            document.getElementById('resultSection').style.display = 'block';
+        });
+        
+        // 计算简单ROI
+        function calculateSimpleROI() {
+            // 获取输入值
+            const initial = parseFloat(document.getElementById('initialInvestment').value) || 0;
+            const final = parseFloat(document.getElementById('finalValue').value) || 0;
+            const cost = parseFloat(document.getElementById('investmentCost').value) || 0;
+            const years = parseFloat(document.getElementById('simpleYears').value) || 1;
+            const considerInflation = document.getElementById('inflationToggle').checked;
+            const inflationRate = considerInflation ? 
+                parseFloat(document.getElementById('inflationRate').value) || 0 : 0;
+            
+            // 总投资
+            const totalInvestment = initial + cost;
+            
+            // 净收益
+            const netProfit = final - totalInvestment;
+            
+            // 简单ROI
+            const simpleROI = (netProfit / totalInvestment) * 100;
+            
+            // 年化收益率
+            let annualizedROI = 0;
+            if (years > 0) {
+                annualizedROI = (Math.pow(1 + simpleROI/100, 1/years) - 1) * 100;
+            }
+            
+            // 投资回收期（简化计算）
+            const paybackPeriod = totalInvestment / (netProfit / years);
+            
+            // 显示结果
+            document.getElementById('totalInvestment').textContent = 
+                totalInvestment.toFixed(2) + ' 元';
+            document.getElementById('netProfit').textContent = 
+                netProfit.toFixed(2) + ' 元';
+            document.getElementById('simpleROI').textContent = 
+                simpleROI.toFixed(2) + '%';
+            document.getElementById('simpleAnnualized').textContent = 
+                annualizedROI.toFixed(2) + '%';
+            document.getElementById('paybackPeriod').textContent = 
+                paybackPeriod.toFixed(2) + ' 年';
+            
+            // 通货膨胀调整结果
+            if (considerInflation && inflationRate > 0) {
+                document.getElementById('inflationResult').style.display = 'block';
+                
+                // 实际净收益（扣除通胀）
+                const realNetProfit = final / Math.pow(1 + inflationRate/100, years) - totalInvestment;
+                
+                // 实际ROI
+                const realROI = (realNetProfit / totalInvestment) * 100;
+                
+                // 实际年化收益率
+                const realAnnualized = (Math.pow(1 + realROI/100, 1/years) - 1) * 100;
+                
+                document.getElementById('realNetProfit').textContent = 
+                    realNetProfit.toFixed(2) + ' 元';
+                document.getElementById('realROI').textContent = 
+                    realROI.toFixed(2) + '%';
+                document.getElementById('realAnnualized').textContent = 
+                    realAnnualized.toFixed(2) + '%';
+            } else {
+                document.getElementById('inflationResult').style.display = 'none';
+            }
+            
+            // 更新收益分析
+            updateROIAnalysis(simpleROI, annualizedROI);
+            
+            // 显示简单ROI结果区域
+            document.getElementById('simpleResult').style.display = 'block';
+            document.getElementById('annualizedResult').style.display = 'none';
+            document.getElementById('compareResult').style.display = 'none';
+            document.getElementById('multipleResult').style.display = 'none';
+        }
+        
+        // 更新ROI分析
+        function updateROIAnalysis(simpleROI, annualizedROI) {
+            let roiLevel = '低';
+            let riskAdjusted = '低';
+            let attractiveness = '低';
+            
+            if (annualizedROI > 15) {
+                roiLevel = '很高';
+                riskAdjusted = '需谨慎';
+                attractiveness = '很高(高风险)';
+            } else if (annualizedROI > 10) {
+                roiLevel = '高';
+                riskAdjusted = '较高';
+                attractiveness = '高';
+            } else if (annualizedROI > 6) {
+                roiLevel = '中等';
+                riskAdjusted = '中等';
+                attractiveness = '中等';
+            } else if (annualizedROI > 3) {
+                roiLevel = '一般';
+                riskAdjusted = '低';
+                attractiveness = '一般';
+            } else {
+                roiLevel = '低';
+                riskAdjusted = '很低';
+                attractiveness = '低';
+            }
+            
+            document.getElementById('roiLevel').textContent = roiLevel;
+            document.getElementById('riskAdjustedReturn').textContent = riskAdjusted;
+            document.getElementById('investmentAttractiveness').textContent = attractiveness;
+        }
+        
+        // 计算年化ROI
+        function calculateAnnualizedROI() {
+            // 获取输入值
+            const initial = parseFloat(document.getElementById('annualizedInitial').value) || 0;
+            const final = parseFloat(document.getElementById('annualizedFinal').value) || 0;
+            const period = parseFloat(document.getElementById('investmentPeriod').value) || 0;
+            const unit = document.getElementById('periodUnit').value;
+            const frequency = document.getElementById('roiCompoundFrequency').value;
+            const hasAdditional = document.getElementById('additionalToggle').checked;
+            
+            // 转换为年数
+            let years = period;
+            if (unit === 'months') {
+                years = period / 12;
+            } else if (unit === 'days') {
+                years = period / 365;
+            }
+            
+            // 确定复利频率
+            let n = 1;
+            switch(frequency) {
+                case 'yearly': n = 1; break;
+                case 'quarterly': n = 4; break;
+                case 'monthly': n = 12; break;
+                case 'daily': n = 365; break;
+            }
+            
+            let annualizedROI = 0;
+            let totalReturn = 0;
+            
+            if (!hasAdditional) {
+                // 没有定期追加
+                totalReturn = ((final - initial) / initial) * 100;
+                
+                // 计算年化收益率
+                if (years > 0) {
+                    const periods = years * n;
+                    const ratePerPeriod = Math.pow(final / initial, 1 / periods) - 1;
+                    annualizedROI = (Math.pow(1 + ratePerPeriod, n) - 1) * 100;
+                }
+            } else {
+                // 有定期追加，简化计算
+                const additional = parseFloat(document.getElementById('additionalAmount').value) || 0;
+                const addFrequency = document.getElementById('additionalFrequency').value;
+                
+                // 假设每月追加，简化计算年化收益率
+                totalReturn = ((final - initial) / initial) * 100;
+                
+                // 近似计算年化收益率
+                if (years > 0) {
+                    annualizedROI = (Math.pow(final / initial, 1 / years) - 1) * 100;
+                }
+            }
+            
+            // 显示结果
+            document.getElementById('annualizedInitialResult').textContent = 
+                initial.toFixed(2) + ' 元';
+            document.getElementById('annualizedFinalResult').textContent = 
+                final.toFixed(2) + ' 元';
+            document.getElementById('investmentDuration').textContent = 
+                years.toFixed(2) + ' 年';
+            document.getElementById('annualizedROI').textContent = 
+                annualizedROI.toFixed(2) + '%';
+            document.getElementById('totalReturn').textContent = 
+                totalReturn.toFixed(2) + '%';
+            
+            // 更新复利效果
+            document.getElementById('rule72Result').textContent = 
+                (72 / annualizedROI).toFixed(1) + ' 年翻倍';
+            document.getElementById('rule115Result').textContent = 
+                (115 / annualizedROI).toFixed(1) + ' 年三倍';
+            document.getElementById('tenYearValue').textContent = 
+                (initial * Math.pow(1 + annualizedROI/100, 10)).toFixed(2) + ' 元';
+            
+            // 显示年化ROI结果区域
+            document.getElementById('simpleResult').style.display = 'none';
+            document.getElementById('annualizedResult').style.display = 'block';
+            document.getElementById('compareResult').style.display = 'none';
+            document.getElementById('multipleResult').style.display = 'none';
+            
+            // 绘制图表
+            drawAnnualizedChart(initial, annualizedROI, years);
+        }
+        
+        // 比较投资方案
+        function compareInvestments() {
+            // 获取输入值
+            const aInitial = parseFloat(document.getElementById('compareAInitial').value) || 0;
+            const aRate = parseFloat(document.getElementById('compareARate').value) || 0;
+            const aYears = parseFloat(document.getElementById('compareAYears').value) || 0;
+            
+            const bInitial = parseFloat(document.getElementById('compareBInitial').value) || 0;
+            const bRate = parseFloat(document.getElementById('compareBRate').value) || 0;
+            const bYears = parseFloat(document.getElementById('compareBYears').value) || 0;
+            
+            const compareType = document.getElementById('compareType').value;
+            
+            let aFinal = 0;
+            let bFinal = 0;
+            
+            if (compareType === 'final') {
+                // 计算最终价值
+                aFinal = aInitial * Math.pow(1 + aRate/100, aYears);
+                bFinal = bInitial * Math.pow(1 + bRate/100, bYears);
+            } else if (compareType === 'rate') {
+                // 计算相同最终价值所需的收益率
+                const targetValue = Math.max(aInitial, bInitial) * 2; // 假设目标为翻倍
+                aFinal = targetValue;
+                bFinal = targetValue;
+                
+                // 重新计算收益率
+                const newARate = (Math.pow(targetValue / aInitial, 1 / aYears) - 1) * 100;
+                const newBRate = (Math.pow(targetValue / bInitial, 1 / bYears) - 1) * 100;
+                
+                // 这里只是示例，实际应更新显示
+            } else {
+                // 相同收益率，不同年限
+                const commonRate = (aRate + bRate) / 2;
+                aFinal = aInitial * Math.pow(1 + commonRate/100, aYears);
+                bFinal = bInitial * Math.pow(1 + commonRate/100, bYears);
+            }
+            
+            // 计算年化收益率
+            const aAnnualized = (Math.pow(aFinal / aInitial, 1 / aYears) - 1) * 100;
+            const bAnnualized = (Math.pow(bFinal / bInitial, 1 / bYears) - 1) * 100;
+            
+            // 价值差异
+            const valueDifference = aFinal - bFinal;
+            
+            // 显示结果
+            document.getElementById('compareAFinal').textContent = 
+                aFinal.toFixed(2) + ' 元';
+            document.getElementById('compareBFinal').textContent = 
+                bFinal.toFixed(2) + ' 元';
+            document.getElementById('valueDifference').textContent = 
+                Math.abs(valueDifference).toFixed(2) + ' 元';
+            document.getElementById('compareAAnnualized').textContent = 
+                aAnnualized.toFixed(2) + '%';
+            document.getElementById('compareBAnnualized').textContent = 
+                bAnnualized.toFixed(2) + '%';
+            
+            // 更新比较条
+            const maxValue = Math.max(aFinal, bFinal);
+            const aPercent = (aFinal / maxValue) * 100;
+            const bPercent = (bFinal / maxValue) * 100;
+            
+            document.getElementById('barA').style.width = aPercent + '%';
+            document.getElementById('barB').style.width = bPercent + '%';
+            document.getElementById('valueA').textContent = aFinal.toFixed(2) + ' 元';
+            document.getElementById('valueB').textContent = bFinal.toFixed(2) + ' 元';
+            
+            // 更新结论
+            let conclusion = '';
+            if (aFinal > bFinal) {
+                conclusion = `方案A比方案B多收益 ${valueDifference.toFixed(2)} 元`;
+            } else if (bFinal > aFinal) {
+                conclusion = `方案B比方案A多收益 ${Math.abs(valueDifference).toFixed(2)} 元`;
+            } else {
+                conclusion = '两个方案收益相同';
+            }
+            document.getElementById('comparisonConclusion').textContent = conclusion;
+            
+            // 显示投资比较结果区域
+            document.getElementById('simpleResult').style.display = 'none';
+            document.getElementById('annualizedResult').style.display = 'none';
+            document.getElementById('compareResult').style.display = 'block';
+            document.getElementById('multipleResult').style.display = 'none';
+            
+            // 绘制比较图表
+            drawCompareChart(aInitial, aRate, aYears, bInitial, bRate, bYears);
+        }
+        
+        // 计算多期投资ROI
+        function calculateMultiplePeriodROI() {
+            // 获取现金流数据
+            const cashflows = [];
+            for (let i = 0; i <= 5; i++) {
+                const cashflow = parseFloat(document.getElementById(`cashflow${i}`).value) || 0;
+                cashflows.push(cashflow);
+            }
+            
+            const discountRate = parseFloat(document.getElementById('discountRate').value) || 0;
+            
+            // 计算净现值(NPV)
+            let npv = 0;
+            for (let i = 0; i < cashflows.length; i++) {
+                npv += cashflows[i] / Math.pow(1 + discountRate/100, i);
+            }
+            
+            // 计算内部收益率(IRR) - 简化计算
+            let irr = 0;
+            // 简单估算IRR（实际IRR计算需要迭代法）
+            if (cashflows[0] < 0) { // 有初始投资
+                let totalReturn = 0;
+                for (let i = 1; i < cashflows.length; i++) {
+                    totalReturn += cashflows[i];
+                }
+                const totalInvestment = Math.abs(cashflows[0]);
+                const totalROI = (totalReturn - totalInvestment) / totalInvestment * 100;
+                irr = totalROI / cashflows.length; // 简单平均
+            }
+            
+            // 计算盈利指数(PI)
+            let pvInflows = 0;
+            let pvOutflows = Math.abs(cashflows[0]);
+            for (let i = 1; i < cashflows.length; i++) {
+                if (cashflows[i] > 0) {
+                    pvInflows += cashflows[i] / Math.pow(1 + discountRate/100, i);
+                } else {
+                    pvOutflows += Math.abs(cashflows[i]) / Math.pow(1 + discountRate/100, i);
+                }
+            }
+            const pi = pvInflows / pvOutflows;
+            
+            // 计算动态投资回收期
+            let cumulativePV = 0;
+            let dynamicPayback = 0;
+            for (let i = 0; i < cashflows.length; i++) {
+                const pv = cashflows[i] / Math.pow(1 + discountRate/100, i);
+                cumulativePV += pv;
+                if (cumulativePV >= 0 && dynamicPayback === 0) {
+                    if (i === 0) {
+                        dynamicPayback = 0;
+                    } else {
+                        // 线性插值计算回收期
+                        const prevPV = cumulativePV - pv;
+                        dynamicPayback = i - 1 + Math.abs(prevPV) / (pv + Math.abs(prevPV));
+                    }
+                }
+            }
+            
+            // 显示结果
+            document.getElementById('npvValue').textContent = 
+                npv.toFixed(2) + ' 元';
+            document.getElementById('irrValue').textContent = 
+                irr.toFixed(2) + '%';
+            document.getElementById('piValue').textContent = 
+                pi.toFixed(2);
+            document.getElementById('dynamicPayback').textContent = 
+                dynamicPayback.toFixed(2) + ' 年';
+            
+            // 更新投资决策
+            document.getElementById('npvDecision').textContent = 
+                npv >= 0 ? '可行' : '不可行';
+            document.getElementById('irrDecision').textContent = 
+                irr >= discountRate ? '可行' : '不可行';
+            document.getElementById('piDecision').textContent = 
+                pi >= 1 ? '可行' : '不可行';
+            
+            // 生成现金流分析
+            generateCashflowAnalysis(cashflows, discountRate);
+            
+            // 显示多期投资结果区域
+            document.getElementById('simpleResult').style.display = 'none';
+            document.getElementById('annualizedResult').style.display = 'none';
+            document.getElementById('compareResult').style.display = 'none';
+            document.getElementById('multipleResult').style.display = 'block';
+        }
+        
+        // 生成现金流分析
+        function generateCashflowAnalysis(cashflows, discountRate) {
+            const analysisBody = document.getElementById('cashflowAnalysis');
+            analysisBody.innerHTML = '';
+            
+            let cumulativeCF = 0;
+            let cumulativePV = 0;
+            
+            for (let i = 0; i < cashflows.length; i++) {
+                const cf = cashflows[i];
+                const pv = cf / Math.pow(1 + discountRate/100, i);
+                cumulativeCF += cf;
+                cumulativePV += pv;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>第 ${i} 年</td>
+                    <td>${cf.toFixed(2)}</td>
+                    <td>${pv.toFixed(2)}</td>
+                    <td>${cumulativeCF.toFixed(2)}</td>
+                    <td>${cumulativePV.toFixed(2)}</td>
+                `;
+                analysisBody.appendChild(row);
+            }
+        }
+        
+        // 绘制年化收益图表
+        function drawAnnualizedChart(initial, annualizedROI, years) {
+            const ctx = document.getElementById('annualizedChart').getContext('2d');
+            
+            // 生成数据
+            const labels = [];
+            const data = [];
+            
+            for (let i = 0; i <= years; i++) {
+                labels.push(`第${i}年`);
+                const value = initial * Math.pow(1 + annualizedROI/100, i);
+                data.push(value);
+            }
+            
+            // 如果已有图表实例，销毁它
+            if (window.annualizedChartInstance) {
+                window.annualizedChartInstance.destroy();
+            }
+            
+            // 创建新图表
+            window.annualizedChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '投资价值增长',
+                        data: data,
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `投资价值: ${context.raw.toFixed(2)}元`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 10000) {
+                                        return (value/10000).toFixed(1) + '万元';
+                                    }
+                                    return value.toLocaleString() + '元';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 绘制比较图表
+        function drawCompareChart(aInitial, aRate, aYears, bInitial, bRate, bYears) {
+            const ctx = document.getElementById('compareChart').getContext('2d');
+            
+            // 生成数据
+            const labels = [];
+            const dataA = [];
+            const dataB = [];
+            
+            const maxYears = Math.max(aYears, bYears);
+            
+            for (let i = 0; i <= maxYears; i++) {
+                labels.push(`第${i}年`);
+                
+                if (i <= aYears) {
+                    dataA.push(aInitial * Math.pow(1 + aRate/100, i));
+                } else {
+                    dataA.push(null);
+                }
+                
+                if (i <= bYears) {
+                    dataB.push(bInitial * Math.pow(1 + bRate/100, i));
+                } else {
+                    dataB.push(null);
+                }
+            }
+            
+            // 如果已有图表实例，销毁它
+            if (window.compareChartInstance) {
+                window.compareChartInstance.destroy();
+            }
+            
+            // 创建新图表
+            window.compareChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '方案A',
+                            data: dataA,
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: '方案B',
+                            data: dataB,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.raw !== null) {
+                                        return `${context.dataset.label}: ${context.raw.toFixed(2)}元`;
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 10000) {
+                                        return (value/10000).toFixed(1) + '万元';
+                                    }
+                                    return value.toLocaleString() + '元';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 主题切换
+        function initTheme() {
+            const themeBtn = document.querySelector('.theme-btn');
+            
+            // 检查本地存储的主题设置
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            
+            // 切换主题函数
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新图标
+                if (themeBtn) {
+                    const icon = themeBtn.querySelector('i');
+                    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+            
+            // 添加事件监听
+            if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            
+            // 页面加载时自动计算一次
+            document.getElementById('calculateBtn').click();
+        });
+    </script>
+    
+    <style>
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .tab:hover {
+            color: var(--primary);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .toggle-switch input[type="checkbox"] {
+            display: none;
+        }
+        
+        .toggle-slider {
+            position: relative;
+            display: inline-block;
+            width: 3rem;
+            height: 1.5rem;
+            background-color: var(--gray-300);
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: background-color var(--transition);
+        }
+        
+        .toggle-slider::before {
+            content: "";
+            position: absolute;
+            width: 1.25rem;
+            height: 1.25rem;
+            left: 0.125rem;
+            top: 0.125rem;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform var(--transition);
+        }
+        
+        .toggle-switch input[type="checkbox"]:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+        
+        .toggle-switch input[type="checkbox"]:checked + .toggle-slider::before {
+            transform: translateX(1.5rem);
+        }
+        
+        .toggle-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .input-hint {
+            display: block;
+            margin-top: 0.25rem;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+        
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .cashflow-input {
+            margin-top: 0.5rem;
+        }
+        
+        .cashflow-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cashflow-row span {
+            flex: 1;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .cashflow-field {
+            width: 8rem;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            text-align: right;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        
+        .roi-analysis,
+        .compound-effect,
+        .decision-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .analysis-item,
+        .effect-item,
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: var(--radius);
+            background-color: var(--gray-50);
+            border: 1px solid var(--border-light);
+        }
+        
+        .analysis-title,
+        .effect-title,
+        .metric-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+        
+        .analysis-value,
+        .effect-value,
+        .metric-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin-top: 0.5rem;
+        }
+        
+        .comparison-analysis {
+            margin-top: 1rem;
+        }
+        
+        .comparison-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .comparison-label {
+            width: 5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+        
+        .comparison-bar-bg {
+            flex: 1;
+            height: 1.5rem;
+            background-color: var(--gray-200);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 0 1rem;
+        }
+        
+        .comparison-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--radius);
+            transition: width 0.5s ease;
+        }
+        
+        .comparison-value {
+            width: 6rem;
+            text-align: right;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+        
+        .comparison-conclusion {
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: var(--primary-light);
+            border-radius: var(--radius);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .cashflow-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        
+        .cashflow-table th,
+        .cashflow-table td {
+            padding: 0.5rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .cashflow-table th {
+            font-weight: 600;
+            color: var(--text-primary);
+            background-color: var(--gray-50);
+        }
+        
+        .cashflow-table th:first-child,
+        .cashflow-table td:first-child {
+            text-align: left;
+        }
+        
+        .cashflow-table tr:hover {
+            background-color: var(--gray-50);
+        }
+        
+        @media (max-width: 640px) {
+            .tabs {
+                font-size: 0.875rem;
+            }
+            
+            .tab {
+                padding: 0.5rem 1rem;
+            }
+            
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .roi-analysis,
+            .compound-effect,
+            .decision-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 150px;
+            }
+            
+            .cashflow-table {
+                font-size: 0.75rem;
+            }
+            
+            .cashflow-table th,
+            .cashflow-table td {
+                padding: 0.25rem;
+            }
+            
+            .cashflow-field {
+                width: 6rem;
+            }
+        }
+    </style>
+</body>
+</html>
