@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面积体积计算器 - 生活计算宝典</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../layout.css">
+    <link rel="stylesheet" href="../../components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+<body class="app">
+    <header class="app-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-mobile">
+                    <a href="../../pages/home.html" class="navbar-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="navbar-title">面积体积计算</div>
+                    <div></div>
+                </div>
+                
+                <div class="navbar-desktop">
+                    <a href="../../index.html" class="logo">
+                        <i class="fas fa-calculator"></i>
+                        <span class="logo-text">生活计算宝典</span>
+                    </a>
+                    <div class="nav-links">
+                        <a href="../../index.html" class="nav-link">首页</a>
+                        <a href="../../pages/home.html" class="nav-link">居家生活</a>
+                        <a href="../../pages/finance.html" class="nav-link">理财金融</a>
+                        <a href="../../pages/tools.html" class="nav-link">所有工具</a>
+                    </div>
+                    <div class="theme-toggle">
+                        <button class="theme-btn" aria-label="切换主题">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <section class="section">
+            <div class="container">
+                <!-- 面包屑导航 -->
+                <nav class="breadcrumb">
+                    <a href="../../index.html" class="breadcrumb-link">首页</a>
+                    <span class="breadcrumb-divider"><i class="fas fa-chevron-right"></i></span>
+                    <a href="../../pages/home.html" class="breadcrumb-link">居家生活</a>
+                    <span class="breadcrumb-divider"><i class="fas fa-chevron-right"></i></span>
+                    <span class="breadcrumb-current">面积体积计算</span>
+                </nav>
+                
+                <!-- 计算器容器 -->
+                <div class="calculator-container">
+                    <div class="calculator-card">
+                        <div class="calculator-header">
+                            <h1 class="calculator-title">面积体积计算器</h1>
+                            <p class="calculator-description">
+                                计算各种几何图形的面积和体积，支持房间、家具、容器等尺寸计算。
+                            </p>
+                        </div>
+                        
+                        <!-- 图形选择 -->
+                        <div class="input-group">
+                            <label class="input-label">选择图形类型</label>
+                            <select id="shapeType" class="input-field">
+                                <option value="rectangle">矩形/长方体</option>
+                                <option value="circle">圆形/圆柱体</option>
+                                <option value="triangle">三角形</option>
+                                <option value="trapezoid">梯形</option>
+                                <option value="room">房间面积</option>
+                                <option value="sphere">球体</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 矩形计算区域 -->
+                        <div id="rectangleSection">
+                            <div class="input-group">
+                                <label class="input-label">长度 (米)</label>
+                                <input type="number" id="rectLength" class="input-field" placeholder="例如：5" step="0.01">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">宽度 (米)</label>
+                                <input type="number" id="rectWidth" class="input-field" placeholder="例如：3" step="0.01">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">高度 (米，可选)</label>
+                                <input type="number" id="rectHeight" class="input-field" placeholder="计算体积时输入" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- 圆形计算区域 -->
+                        <div id="circleSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">半径 (米)</label>
+                                <input type="number" id="circleRadius" class="input-field" placeholder="例如：2" step="0.01">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">高度 (米，可选)</label>
+                                <input type="number" id="circleHeight" class="input-field" placeholder="计算圆柱体积时输入" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- 三角形计算区域 -->
+                        <div id="triangleSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">底边长度 (米)</label>
+                                <input type="number" id="triangleBase" class="input-field" placeholder="例如：4" step="0.01">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">高度 (米)</label>
+                                <input type="number" id="triangleHeight" class="input-field" placeholder="例如：3" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- 梯形计算区域 -->
+                        <div id="trapezoidSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">上底长度 (米)</label>
+                                <input type="number" id="trapTop" class="input-field" placeholder="例如：3" step="0.01">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">下底长度 (米)</label>
+                                <input type="number" id="trapBottom" class="input-field" placeholder="例如：5" step="0.01">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">高度 (米)</label>
+                                <input type="number" id="trapHeight" class="input-field" placeholder="例如：4" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- 房间面积计算区域 -->
+                        <div id="roomSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">房间形状</label>
+                                <select id="roomShape" class="input-field">
+                                    <option value="rectangular">矩形房间</option>
+                                    <option value="lshape">L形房间</option>
+                                    <option value="custom">自定义多边形</option>
+                                </select>
+                            </div>
+                            
+                            <div id="rectRoomFields">
+                                <div class="input-group">
+                                    <label class="input-label">房间长度 (米)</label>
+                                    <input type="number" id="roomLength" class="input-field" placeholder="例如：4.5" step="0.01">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">房间宽度 (米)</label>
+                                    <input type="number" id="roomWidth" class="input-field" placeholder="例如：3.2" step="0.01">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">房间高度 (米)</label>
+                                    <input type="number" id="roomHeight" class="input-field" placeholder="例如：2.8" step="0.01">
+                                </div>
+                            </div>
+                            
+                            <div id="lshapeFields" style="display: none;">
+                                <div class="input-group">
+                                    <label class="input-label">主区域长度 (米)</label>
+                                    <input type="number" id="lMainLength" class="input-field" placeholder="例如：5" step="0.01">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">主区域宽度 (米)</label>
+                                    <input type="number" id="lMainWidth" class="input-field" placeholder="例如：4" step="0.01">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">副区域长度 (米)</label>
+                                    <input type="number" id="lSubLength" class="input-field" placeholder="例如：3" step="0.01">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label class="input-label">副区域宽度 (米)</label>
+                                    <input type="number" id="lSubWidth" class="input-field" placeholder="例如：2" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 球体计算区域 -->
+                        <div id="sphereSection" style="display: none;">
+                            <div class="input-group">
+                                <label class="input-label">半径 (米)</label>
+                                <input type="number" id="sphereRadius" class="input-field" placeholder="例如：1.5" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- 单位转换 -->
+                        <div class="input-group">
+                            <label class="input-label">单位</label>
+                            <select id="unitType" class="input-field">
+                                <option value="m">米/平方米/立方米</option>
+                                <option value="cm">厘米/平方厘米/立方厘米</option>
+                                <option value="mm">毫米/平方毫米/立方毫米</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 计算按钮 -->
+                        <button class="btn btn-primary btn-block calc-btn" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> 计算
+                        </button>
+                        
+                        <!-- 结果展示 -->
+                        <div class="result-display" id="resultSection" style="display: none;">
+                            <h3 class="result-title"><i class="fas fa-chart-bar"></i> 计算结果</h3>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <span class="result-label">面积</span>
+                                    <span class="result-value" id="areaResult">0.00</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">周长/侧面面积</span>
+                                    <span class="result-value" id="perimeterResult">0.00</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">体积</span>
+                                    <span class="result-value" id="volumeResult">0.00</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">表面积</span>
+                                    <span class="result-value" id="surfaceResult">0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 常用面积参考 -->
+                    <div class="alert alert-info mt-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-ruler-combined mr-3"></i>
+                            <div>
+                                <strong>常用面积参考：</strong> 
+                                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                    <li>标准卧室：12-20平方米</li>
+                                    <li>标准客厅：20-40平方米</li>
+                                    <li>厨房：6-12平方米</li>
+                                    <li>卫生间：4-8平方米</li>
+                                    <li>单人床：2平方米（0.9m × 2m）</li>
+                                    <li>双人床：2.7平方米（1.5m × 1.8m）</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <a href="../../index.html" class="footer-logo">
+                        <i class="fas fa-calculator"></i>
+                        <span>生活计算宝典</span>
+                    </a>
+                    <p class="footer-description">
+                        一站式离线计算工具集合，为您的生活带来便利。
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">居家工具</h4>
+                    <a href="utility-bill.html" class="footer-link">水电费计算</a>
+                    <a href="area-volume.html" class="footer-link">面积体积计算</a>
+                    <a href="paint-calc.html" class="footer-link">涂料用量计算</a>
+                    <a href="cooking-convert.html" class="footer-link">食材换算</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">快速链接</h4>
+                    <a href="../../pages/home.html" class="footer-link">返回居家生活</a>
+                    <a href="../../pages/tools.html" class="footer-link">所有工具</a>
+                    <a href="https://github.com/laddzhao/life-calculators" target="_blank" class="footer-link">GitHub项目</a>
+                    <a href="../../404.html" class="footer-link">404页面</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">其他工具</h4>
+                    <a href="../shopping/discount.html" class="footer-link">折扣计算器</a>
+                    <a href="../finance/interest.html" class="footer-link">利息计算器</a>
+                    <a href="../health/bmi.html" class="footer-link">BMI计算</a>
+                    <a href="../professional/mortgage.html" class="footer-link">房贷计算器</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 生活计算宝典 · 面积体积计算器</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 切换图形类型
+        document.getElementById('shapeType').addEventListener('change', function() {
+            const type = this.value;
+            
+            // 隐藏所有区域
+            document.querySelectorAll('[id$="Section"]').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // 显示选择的区域
+            document.getElementById(type + 'Section').style.display = 'block';
+            
+            // 房间形状切换
+            if (type === 'room') {
+                document.getElementById('roomShape').addEventListener('change', function() {
+                    const roomType = this.value;
+                    document.getElementById('rectRoomFields').style.display = roomType === 'rectangular' ? 'block' : 'none';
+                    document.getElementById('lshapeFields').style.display = roomType === 'lshape' ? 'block' : 'none';
+                });
+            }
+        });
+        
+        // 计算面积体积
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const shape = document.getElementById('shapeType').value;
+            const unit = document.getElementById('unitType').value;
+            let area = 0, perimeter = 0, volume = 0, surface = 0;
+            
+            // 单位转换因子
+            const unitFactor = {
+                'm': 1,
+                'cm': 100,
+                'mm': 1000
+            };
+            const factor = unitFactor[unit];
+            
+            if (shape === 'rectangle') {
+                const length = (parseFloat(document.getElementById('rectLength').value) || 0) / factor;
+                const width = (parseFloat(document.getElementById('rectWidth').value) || 0) / factor;
+                const height = (parseFloat(document.getElementById('rectHeight').value) || 0) / factor;
+                
+                area = length * width;
+                perimeter = 2 * (length + width);
+                volume = length * width * height;
+                surface = 2 * (length*width + length*height + width*height);
+                
+            } else if (shape === 'circle') {
+                const radius = (parseFloat(document.getElementById('circleRadius').value) || 0) / factor;
+                const height = (parseFloat(document.getElementById('circleHeight').value) || 0) / factor;
+                
+                area = Math.PI * radius * radius;
+                perimeter = 2 * Math.PI * radius;
+                volume = Math.PI * radius * radius * height;
+                surface = height > 0 ? 2 * Math.PI * radius * (radius + height) : 0;
+                
+            } else if (shape === 'triangle') {
+                const base = (parseFloat(document.getElementById('triangleBase').value) || 0) / factor;
+                const height = (parseFloat(document.getElementById('triangleHeight').value) || 0) / factor;
+                
+                area = 0.5 * base * height;
+                // 假设是直角三角形，计算斜边和周长
+                const hypotenuse = Math.sqrt(base*base + height*height);
+                perimeter = base + height + hypotenuse;
+                
+            } else if (shape === 'trapezoid') {
+                const top = (parseFloat(document.getElementById('trapTop').value) || 0) / factor;
+                const bottom = (parseFloat(document.getElementById('trapBottom').value) || 0) / factor;
+                const height = (parseFloat(document.getElementById('trapHeight').value) || 0) / factor;
+                
+                area = 0.5 * (top + bottom) * height;
+                // 假设等腰梯形
+                const side = Math.sqrt(Math.pow((bottom-top)/2, 2) + height*height);
+                perimeter = top + bottom + 2 * side;
+                
+            } else if (shape === 'room') {
+                const roomType = document.getElementById('roomShape').value;
+                
+                if (roomType === 'rectangular') {
+                    const length = (parseFloat(document.getElementById('roomLength').value) || 0);
+                    const width = (parseFloat(document.getElementById('roomWidth').value) || 0);
+                    const height = (parseFloat(document.getElementById('roomHeight').value) || 0);
+                    
+                    // 地板面积
+                    area = length * width;
+                    // 墙面面积（周长×高度）
+                    perimeter = 2 * (length + width) * height;
+                    // 房间体积
+                    volume = length * width * height;
+                    // 总表面积（包括天花板）
+                    surface = 2*(length*width) + perimeter;
+                    
+                } else if (roomType === 'lshape') {
+                    const mainLength = (parseFloat(document.getElementById('lMainLength').value) || 0);
+                    const mainWidth = (parseFloat(document.getElementById('lMainWidth').value) || 0);
+                    const subLength = (parseFloat(document.getElementById('lSubLength').value) || 0);
+                    const subWidth = (parseFloat(document.getElementById('lSubWidth').value) || 0);
+                    
+                    // L形面积计算
+                    const mainArea = mainLength * mainWidth;
+                    const subArea = subLength * subWidth;
+                    // 假设重叠部分为宽度相同的最小矩形
+                    const overlap = Math.min(mainWidth, subWidth) * Math.min(mainLength, subLength);
+                    area = mainArea + subArea - overlap;
+                }
+                
+            } else if (shape === 'sphere') {
+                const radius = (parseFloat(document.getElementById('sphereRadius').value) || 0) / factor;
+                
+                area = 0; // 球体无平面面积
+                surface = 4 * Math.PI * radius * radius;
+                volume = (4/3) * Math.PI * Math.pow(radius, 3);
+            }
+            
+            // 单位后缀
+            const areaSuffix = unit === 'm' ? ' 平方米' : unit === 'cm' ? ' 平方厘米' : ' 平方毫米';
+            const volSuffix = unit === 'm' ? ' 立方米' : unit === 'cm' ? ' 立方厘米' : ' 立方毫米';
+            const lenSuffix = unit === 'm' ? ' 米' : unit === 'cm' ? ' 厘米' : ' 毫米';
+            
+            // 显示结果
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('areaResult').textContent = area.toFixed(2) + areaSuffix;
+            document.getElementById('perimeterResult').textContent = shape === 'room' 
+                ? (perimeter.toFixed(2) + areaSuffix) 
+                : (perimeter.toFixed(2) + lenSuffix);
+            document.getElementById('volumeResult').textContent = volume > 0 ? (volume.toFixed(2) + volSuffix) : '不适用';
+            document.getElementById('surfaceResult').textContent = surface > 0 ? (surface.toFixed(2) + areaSuffix) : '不适用';
+        });
+        
+        // 主题切换
+        function initTheme() {
+            const themeBtn = document.querySelector('.theme-btn');
+            
+            // 检查本地存储的主题设置
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            
+            // 切换主题函数
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新图标
+                if (themeBtn) {
+                    const icon = themeBtn.querySelector('i');
+                    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+            
+            // 添加事件监听
+            if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            
+            // 设置默认值
+            document.getElementById('rectLength').value = '5';
+            document.getElementById('rectWidth').value = '3';
+            document.getElementById('rectHeight').value = '2.5';
+            document.getElementById('circleRadius').value = '2';
+            document.getElementById('circleHeight').value = '3';
+            document.getElementById('triangleBase').value = '4';
+            document.getElementById('triangleHeight').value = '3';
+            document.getElementById('trapTop').value = '3';
+            document.getElementById('trapBottom').value = '5';
+            document.getElementById('trapHeight').value = '4';
+            document.getElementById('roomLength').value = '4.5';
+            document.getElementById('roomWidth').value = '3.2';
+            document.getElementById('roomHeight').value = '2.8';
+            document.getElementById('lMainLength').value = '5';
+            document.getElementById('lMainWidth').value = '4';
+            document.getElementById('lSubLength').value = '3';
+            document.getElementById('lSubWidth').value = '2';
+            document.getElementById('sphereRadius').value = '1.5';
+        });
+    </script>
+    
+    <style>
+        /* 与水电费计算器保持一致的样式 */
+    </style>
+</body>
+</html>
